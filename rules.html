@@ -243,21 +243,18 @@
     line-height:1.5;
   }
 
-  /* ===== FLOW STEPS ===== */
+  /* ===== FLOW STEPS (mirrors rules_screen.dart _StepLine — donuticontel.png) ===== */
   .step{
     display:flex;align-items:flex-start;gap:14px;
     padding:8px 0;
   }
-  .step-num{
-    width:40px;height:40px;flex-shrink:0;
-    border-radius:50%;
-    border:2px solid var(--cyan);
-    background:rgba(0,51,51,0.55);
-    color:var(--cyan);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;font-size:0.95rem;
-    text-shadow:0 0 6px rgba(128,222,234,0.7);
-    box-shadow:0 0 12px rgba(128,222,234,0.25), inset 0 0 8px rgba(128,222,234,0.15);
+  .step-icon{
+    width:44px;height:44px;flex-shrink:0;
+    background-image:url('support_assets/donuticontel.png');
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    filter:drop-shadow(0 0 6px rgba(128,222,234,0.35));
   }
   .step-text{flex:1;min-width:0}
   .step-label{
@@ -397,40 +394,47 @@
     white-space:pre-line;
   }
 
-  /* ===== BACK BUTTON ===== */
-  .back-btn-wrap{margin-top:36px;display:flex;justify-content:center}
-  .back-btn{
-    display:inline-block;
-    padding:16px 48px;
-    background:rgba(0,51,51,0.85);
-    border:2px solid var(--cyan);
-    border-radius:8px;
+  /* ===== PAGE NAV (consistent across support / rules / privacy) ===== */
+  .page-nav{
+    display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+    margin-top:56px;padding-top:32px;
+    border-top:1px solid var(--border-faint);
+  }
+  .nav-link{
+    padding:10px 22px;
+    background:rgba(0,51,51,0.40);
+    border:1px solid var(--cyan);
+    border-radius:999px;
     color:var(--cyan);
     text-decoration:none;
-    font-weight:700;
-    font-size:0.98rem;
-    letter-spacing:0.18em;
+    font-weight:600;
+    font-size:0.78rem;
+    letter-spacing:0.16em;
     text-transform:uppercase;
-    text-shadow:0 0 8px rgba(128,222,234,0.7);
-    box-shadow:0 0 18px rgba(128,222,234,0.3);
-    transition:all 0.25s;
+    text-shadow:0 0 6px rgba(128,222,234,0.5);
+    transition:all 0.2s;
   }
-  .back-btn:hover{
-    background:rgba(0,51,51,0.95);
-    box-shadow:0 0 32px rgba(128,222,234,0.55);
-    transform:translateY(-2px);
+  .nav-link:hover{
+    background:rgba(0,51,51,0.85);
+    box-shadow:0 0 18px rgba(128,222,234,0.45);
+    transform:translateY(-1px);
+  }
+  .nav-link.active{
+    background:var(--cyan);
+    color:#000;
+    text-shadow:none;
+    box-shadow:0 0 16px rgba(128,222,234,0.55);
+    cursor:default;
+    pointer-events:none;
   }
 
   /* ===== FOOTER ===== */
   footer{
-    margin-top:48px;padding-top:24px;
-    border-top:1px solid var(--border-faint);
+    margin-top:24px;
     text-align:center;
     color:var(--text-muted);
-    font-size:0.78rem;letter-spacing:0.15em;font-weight:500;
+    font-size:0.72rem;letter-spacing:0.15em;font-weight:500;
   }
-  footer a{color:var(--cyan);text-decoration:none;transition:all 0.2s}
-  footer a:hover{text-shadow:0 0 8px rgba(128,222,234,0.6)}
 
   @media (max-width:540px){
     .container{padding:16px 16px 60px}
@@ -513,30 +517,30 @@
     <div class="section-title"><h2>Mission Flow</h2></div>
     <div class="card">
       <div class="step">
-        <div class="step-num">1</div>
+        <div class="step-icon"></div>
         <div class="step-text">
-          <div class="step-label">Timer &amp; Wager</div>
+          <div class="step-label">1. Timer &amp; Wager</div>
           <div class="step-detail">The Officer chooses the duration: 2 min 30 / 3 min 30 / 5 min 30. The shorter the timer, the higher the wager.</div>
         </div>
       </div>
       <div class="step">
-        <div class="step-num">2</div>
+        <div class="step-icon"></div>
         <div class="step-text">
-          <div class="step-label">Questioning</div>
+          <div class="step-label">2. Questioning</div>
           <div class="step-detail">Starting from the Officer and going clockwise, players take turns asking questions or making proposals. Answers are strictly YES / NO.</div>
         </div>
       </div>
       <div class="step">
-        <div class="step-num">3</div>
+        <div class="step-icon"></div>
         <div class="step-text">
-          <div class="step-label">Instant End</div>
+          <div class="step-label">3. Instant End</div>
           <div class="step-detail">As soon as the secret word OR the Parasite's word is proposed, the mission ends.</div>
         </div>
       </div>
       <div class="step">
-        <div class="step-num">4</div>
+        <div class="step-icon"></div>
         <div class="step-text">
-          <div class="step-label">Vote</div>
+          <div class="step-label">4. Vote</div>
           <div class="step-detail">If the Officer's word was found, players debate and vote on who the Virus is.</div>
         </div>
       </div>
@@ -656,12 +660,14 @@
     </div>
   </div>
 
-  <div class="back-btn-wrap">
-    <a class="back-btn" href="support.html">Back to Support</a>
-  </div>
+  <nav class="page-nav">
+    <a class="nav-link" href="support.html">Support</a>
+    <a class="nav-link active" href="rules.html">Rules</a>
+    <a class="nav-link" href="privacy.html">Privacy</a>
+  </nav>
 
   <footer>
-    <p>2026 Rava Studio &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="support.html">Support</a></p>
+    <p>2026 Rava Studio</p>
   </footer>
 
 </div>

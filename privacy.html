@@ -1,150 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOOMNUT - Privacy Policy</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0e14;
-            color: #e0e0e0;
-            line-height: 1.7;
-            padding: 40px 20px;
-        }
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-        h1 {
-            color: #00e5ff;
-            font-size: 28px;
-            margin-bottom: 8px;
-            letter-spacing: 2px;
-        }
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 40px;
-        }
-        h2 {
-            color: #00e5ff;
-            font-size: 18px;
-            margin-top: 32px;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-        }
-        p, li {
-            color: #ccc;
-            font-size: 15px;
-            margin-bottom: 12px;
-        }
-        ul {
-            padding-left: 24px;
-            margin-bottom: 12px;
-        }
-        a {
-            color: #00e5ff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .divider {
-            border: none;
-            border-top: 1px solid #1a2030;
-            margin: 32px 0;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050508">
+<title>DOOMNUT — Privacy Policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050508;
+    --cyan:#80DEEA;
+    --cyan-strong:#00E5FF;
+    --teal:#003333;
+    --text:rgba(255,255,255,0.85);
+    --text-muted:#888888;
+    --border-faint:rgba(128,222,234,0.20);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    min-height:100%;
+    background:#000;
+    color:var(--text);
+    font-family:'Montserrat',sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+
+  /* ===== STARFIELD ===== */
+  .space{position:fixed;inset:0;z-index:0;background:var(--bg);overflow:hidden}
+  .stars{position:absolute;left:-200px;right:-200px;top:0;height:100%;background-repeat:repeat;will-change:transform}
+  .stars.s1{
+    background-image:
+      radial-gradient(1px 1px at 20px 30px,#fff,transparent),
+      radial-gradient(1px 1px at 40px 70px,rgba(255,255,255,0.7),transparent),
+      radial-gradient(1px 1px at 90px 40px,rgba(255,255,255,0.6),transparent),
+      radial-gradient(1px 1px at 130px 80px,#fff,transparent),
+      radial-gradient(1px 1px at 160px 120px,rgba(255,255,255,0.7),transparent),
+      radial-gradient(1px 1px at 50px 160px,#fff,transparent),
+      radial-gradient(1px 1px at 180px 200px,#fff,transparent),
+      radial-gradient(1px 1px at 30px 230px,rgba(255,255,255,0.5),transparent),
+      radial-gradient(1px 1px at 70px 280px,#fff,transparent),
+      radial-gradient(1px 1px at 110px 320px,rgba(255,255,255,0.7),transparent);
+    background-size:200px 350px;
+    animation:drift1 240s linear infinite;
+    opacity:0.85;
+  }
+  .stars.s2{
+    background-image:
+      radial-gradient(1.5px 1.5px at 30px 50px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 130px 90px,rgba(255,255,255,0.85),transparent),
+      radial-gradient(1.5px 1.5px at 200px 30px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 70px 180px,rgba(128,222,234,0.85),transparent),
+      radial-gradient(1.5px 1.5px at 250px 220px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 180px 280px,rgba(255,255,255,0.7),transparent);
+    background-size:300px 350px;
+    animation:drift2 140s linear infinite, twinkle 6s ease-in-out infinite;
+  }
+  .stars.s3{
+    background-image:
+      radial-gradient(2.5px 2.5px at 80px 60px,#fff,transparent),
+      radial-gradient(3px 3px at 220px 140px,rgba(128,222,234,1),transparent),
+      radial-gradient(2px 2px at 350px 200px,#fff,transparent),
+      radial-gradient(3px 3px at 120px 300px,rgba(128,222,234,0.9),transparent),
+      radial-gradient(2.5px 2.5px at 280px 380px,#fff,transparent);
+    background-size:420px 450px;
+    animation:drift3 70s linear infinite, twinkle 3s ease-in-out infinite;
+    filter:drop-shadow(0 0 3px rgba(128,222,234,0.6));
+  }
+  @keyframes drift1{from{transform:translateX(0)}to{transform:translateX(-200px)}}
+  @keyframes drift2{from{transform:translateX(0)}to{transform:translateX(-300px)}}
+  @keyframes drift3{from{transform:translateX(0)}to{transform:translateX(-420px)}}
+  @keyframes twinkle{0%,100%{filter:brightness(1) drop-shadow(0 0 3px rgba(128,222,234,0.6))}50%{filter:brightness(0.55) drop-shadow(0 0 1px rgba(128,222,234,0.3))}}
+
+  .scanlines{
+    position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(0,0,0,0.20) 2px,rgba(0,0,0,0.20) 4px);
+  }
+
+  /* ===== CONTENT ===== */
+  .container{position:relative;z-index:10;max-width:760px;margin:0 auto;padding:24px 24px 80px}
+
+  /* ===== HEADER (mirrors CyberAppBar) ===== */
+  .app-bar{
+    padding:14px 4px 24px;
+    border-bottom:1px solid var(--border-faint);
+    margin-bottom:32px;
+  }
+  .app-bar-top{display:flex;align-items:center;justify-content:flex-start;margin-bottom:14px}
+  .back-btn-icon{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:8px;
+    border:2px solid var(--cyan);
+    border-radius:8px;
+    background:transparent;
+    cursor:pointer;
+    transition:all 0.2s;
+    text-decoration:none;
+  }
+  .back-btn-icon:hover{
+    background:rgba(128,222,234,0.10);
+    box-shadow:0 0 14px rgba(128,222,234,0.45);
+  }
+  .back-btn-icon:active{transform:scale(0.94)}
+  .back-arrow{
+    display:block;
+    width:22px;height:22px;
+    background-color:var(--cyan);
+    -webkit-mask-image:url('support_assets/fleche.png');
+    mask-image:url('support_assets/fleche.png');
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    filter:drop-shadow(0 0 4px rgba(128,222,234,0.5));
+  }
+  .page-title{
+    font-weight:700;
+    font-size:1.45rem;
+    color:var(--cyan);
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    text-shadow:0 0 12px rgba(128,222,234,0.6), 0 0 4px rgba(128,222,234,0.4);
+  }
+  .effective-date{
+    margin-top:6px;
+    color:var(--text-muted);
+    font-size:0.78rem;letter-spacing:0.18em;
+    text-transform:uppercase;font-weight:500;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section{margin-bottom:18px}
+  .section-title{
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:10px;
+  }
+  .section-title::before{
+    content:'';
+    display:inline-block;
+    width:4px;height:18px;
+    background:var(--cyan);
+    box-shadow:0 0 8px rgba(128,222,234,0.6);
+  }
+  .section-title h2{
+    font-weight:700;
+    font-size:0.95rem;
+    color:var(--cyan);
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    text-shadow:0 0 10px rgba(128,222,234,0.5);
+  }
+
+  /* ===== GLASS CARD ===== */
+  .card{
+    background:rgba(0,0,0,0.65);
+    border:1px solid rgba(128,222,234,0.30);
+    border-radius:8px;
+    padding:18px 20px;
+    box-shadow:0 0 24px rgba(128,222,234,0.06);
+  }
+  .card p{
+    margin-bottom:10px;
+    font-size:0.95rem;
+    color:rgba(255,255,255,0.88);
+    line-height:1.65;
+  }
+  .card p:last-child{margin-bottom:0}
+  .card strong{color:var(--cyan);font-weight:600}
+  .card ul{padding-left:18px;margin:6px 0 0}
+  .card li{
+    margin-bottom:10px;
+    font-size:0.92rem;
+    color:rgba(255,255,255,0.85);
+    line-height:1.6;
+  }
+  .card li:last-child{margin-bottom:0}
+  .card li strong{color:var(--cyan-strong)}
+  .card a{
+    color:var(--cyan);
+    text-decoration:none;
+    border-bottom:1px dotted var(--cyan);
+    transition:all 0.2s;
+  }
+  .card a:hover{
+    text-shadow:0 0 8px rgba(128,222,234,0.6);
+    border-bottom-style:solid;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact-card{
+    text-align:center;
+    padding:28px 22px;
+  }
+  .contact-card .author{
+    font-size:0.95rem;
+    font-weight:600;
+    color:#fff;
+    margin-bottom:10px;
+  }
+  .contact-card .email-btn{
+    display:inline-block;
+    margin-top:6px;
+    padding:12px 28px;
+    background:rgba(0,51,51,0.80);
+    border:2px solid var(--cyan);
+    border-radius:8px;
+    color:var(--cyan);
+    text-decoration:none;
+    font-weight:700;
+    font-size:0.92rem;
+    letter-spacing:0.10em;
+    text-shadow:0 0 6px rgba(128,222,234,0.7);
+    box-shadow:0 0 14px rgba(128,222,234,0.25);
+    transition:all 0.25s;
+  }
+  .contact-card .email-btn:hover{
+    background:rgba(0,51,51,0.95);
+    box-shadow:0 0 28px rgba(128,222,234,0.5);
+    transform:translateY(-2px);
+  }
+
+  /* ===== PAGE NAV ===== */
+  .page-nav{
+    display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+    margin-top:48px;padding-top:32px;
+    border-top:1px solid var(--border-faint);
+  }
+  .nav-link{
+    padding:10px 22px;
+    background:rgba(0,51,51,0.40);
+    border:1px solid var(--cyan);
+    border-radius:999px;
+    color:var(--cyan);
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.78rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    text-shadow:0 0 6px rgba(128,222,234,0.5);
+    transition:all 0.2s;
+  }
+  .nav-link:hover{
+    background:rgba(0,51,51,0.85);
+    box-shadow:0 0 18px rgba(128,222,234,0.45);
+    transform:translateY(-1px);
+  }
+  .nav-link.active{
+    background:var(--cyan);
+    color:#000;
+    text-shadow:none;
+    box-shadow:0 0 16px rgba(128,222,234,0.55);
+    cursor:default;
+    pointer-events:none;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    margin-top:24px;
+    text-align:center;
+    color:var(--text-muted);
+    font-size:0.72rem;letter-spacing:0.15em;font-weight:500;
+  }
+
+  @media (max-width:540px){
+    .container{padding:16px 16px 60px}
+    .page-title{font-size:1.15rem;letter-spacing:0.18em}
+    .card{padding:14px 16px}
+    .card p,.card li{font-size:0.9rem}
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>DOOMNUT</h1>
-        <p class="subtitle">Privacy Policy &mdash; Effective April 2026</p>
 
-        <hr class="divider">
+<div class="space">
+  <div class="stars s1"></div>
+  <div class="stars s2"></div>
+  <div class="stars s3"></div>
+</div>
+<div class="scanlines"></div>
 
-        <h2>1. Introduction</h2>
-        <p>
-            DOOMNUT is a social deduction party game developed by Pierre-Louis Cargnello.
-            This Privacy Policy explains how information is collected, used, and shared when you use the DOOMNUT mobile application.
-        </p>
+<div class="container">
 
-        <h2>2. Information We Collect</h2>
-        <p>
-            DOOMNUT does <strong>not</strong> collect any personal information directly. The app does not require account creation, login, email address, or any form of registration.
-        </p>
-        <p>
-            All game data (player names, scores, settings, and game history) is stored <strong>locally on your device</strong> and is never transmitted to any server.
-        </p>
-
-        <h2>3. Third-Party Services</h2>
-        <p>The app uses the following third-party services that may collect information:</p>
-        <ul>
-            <li>
-                <strong>Google AdMob</strong> &mdash; Used to display advertisements. Google may collect device identifiers, IP address, and usage data to serve personalized or non-personalized ads.
-                See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.
-            </li>
-            <li>
-                <strong>RevenueCat</strong> &mdash; Used to manage in-app purchases. RevenueCat may process transaction data through the Google Play Store or Apple App Store.
-                See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.
-            </li>
-            <li>
-                <strong>Firebase (Crashlytics &amp; Analytics)</strong> &mdash; Used to monitor app stability and understand usage patterns. Firebase may collect crash logs, device information, and anonymous usage data.
-                See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase's Privacy Policy</a>.
-            </li>
-            <li>
-                <strong>Google Play Store / Apple App Store</strong> &mdash; Handles app distribution and in-app purchase transactions.
-                See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a> and <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.
-            </li>
-        </ul>
-
-        <h2>4. Advertising</h2>
-        <p>
-            DOOMNUT displays ads through Google AdMob. You may see personalized ads based on your interests, or non-personalized ads depending on your device settings and consent choices.
-            You can manage your ad preferences in your device's settings.
-        </p>
-
-        <h2>5. In-App Purchases</h2>
-        <p>
-            DOOMNUT offers optional in-app purchases to unlock additional word packs. These transactions are processed entirely through the Google Play Store or Apple App Store. We do not have access to your payment information.
-        </p>
-
-        <h2>6. Children's Privacy</h2>
-        <p>
-            DOOMNUT is not directed at children under 13. We do not knowingly collect personal information from children. Since the app does not collect any personal data, no special provisions are required.
-        </p>
-
-        <h2>7. Data Retention</h2>
-        <p>
-            Since all game data is stored locally on your device, you have full control over it. Uninstalling the app or clearing its data will permanently delete all locally stored information.
-        </p>
-
-        <h2>8. Your Rights</h2>
-        <p>
-            As we do not collect personal data, there is no personal data to access, modify, or delete on our end. For data collected by third-party services (Google, RevenueCat), please refer to their respective privacy policies.
-        </p>
-
-        <h2>9. Changes to This Policy</h2>
-        <p>
-            We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the updated policy.
-        </p>
-
-        <h2>10. Contact</h2>
-        <p>
-            If you have any questions about this Privacy Policy, please contact us at:
-        </p>
-        <p>
-            <strong>Pierre-Louis Cargnello</strong><br>
-            <a href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>
-        </p>
-
-        <hr class="divider">
-
-        <p class="subtitle" style="text-align: center; margin-top: 20px;">
-            &copy; 2026 Pierre-Louis Cargnello. All rights reserved.
-        </p>
+  <div class="app-bar">
+    <div class="app-bar-top">
+      <a class="back-btn-icon" href="support.html" aria-label="Back to support">
+        <span class="back-arrow"></span>
+      </a>
     </div>
+    <h1 class="page-title">Privacy Policy</h1>
+    <div class="effective-date">Effective April 2026</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>1. Introduction</h2></div>
+    <div class="card">
+      <p>DOOMNUT is a social deduction party game developed by Pierre-Louis Cargnello. This Privacy Policy explains how information is collected, used, and shared when you use the DOOMNUT mobile application.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>2. Information We Collect</h2></div>
+    <div class="card">
+      <p>DOOMNUT does <strong>not</strong> collect any personal information directly. The app does not require account creation, login, email address, or any form of registration.</p>
+      <p>All game data (player names, scores, settings, and game history) is stored <strong>locally on your device</strong> and is never transmitted to any server.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>3. Third-Party Services</h2></div>
+    <div class="card">
+      <p>The app uses the following third-party services that may collect information:</p>
+      <ul>
+        <li><strong>Google AdMob</strong> — Used to display advertisements. Google may collect device identifiers, IP address, and usage data to serve personalized or non-personalized ads. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+        <li><strong>RevenueCat</strong> — Used to manage in-app purchases. RevenueCat may process transaction data through the Google Play Store or Apple App Store. See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.</li>
+        <li><strong>Firebase (Crashlytics &amp; Analytics)</strong> — Used to monitor app stability and understand usage patterns. Firebase may collect crash logs, device information, and anonymous usage data. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase's Privacy Policy</a>.</li>
+        <li><strong>Google Play Store / Apple App Store</strong> — Handles app distribution and in-app purchase transactions. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a> and <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>4. Advertising</h2></div>
+    <div class="card">
+      <p>DOOMNUT displays ads through Google AdMob. You may see personalized ads based on your interests, or non-personalized ads depending on your device settings and consent choices. You can manage your ad preferences in your device's settings.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>5. In-App Purchases</h2></div>
+    <div class="card">
+      <p>DOOMNUT offers optional in-app purchases to unlock additional word packs. These transactions are processed entirely through the Google Play Store or Apple App Store. We do not have access to your payment information.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>6. Children's Privacy</h2></div>
+    <div class="card">
+      <p>DOOMNUT is not directed at children under 13. We do not knowingly collect personal information from children. Since the app does not collect any personal data, no special provisions are required.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>7. Data Retention</h2></div>
+    <div class="card">
+      <p>Since all game data is stored locally on your device, you have full control over it. Uninstalling the app or clearing its data will permanently delete all locally stored information.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>8. Your Rights</h2></div>
+    <div class="card">
+      <p>As we do not collect personal data, there is no personal data to access, modify, or delete on our end. For data collected by third-party services (Google, RevenueCat, Firebase), please refer to their respective privacy policies.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>9. Changes to This Policy</h2></div>
+    <div class="card">
+      <p>We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><h2>10. Contact</h2></div>
+    <div class="card contact-card">
+      <p style="margin-bottom:14px">If you have any questions about this Privacy Policy, please contact us at:</p>
+      <div class="author">Pierre-Louis Cargnello</div>
+      <a class="email-btn" href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>
+    </div>
+  </div>
+
+  <nav class="page-nav">
+    <a class="nav-link" href="support.html">Support</a>
+    <a class="nav-link" href="rules.html">Rules</a>
+    <a class="nav-link active" href="privacy.html">Privacy</a>
+  </nav>
+
+  <footer>
+    <p>&copy; 2026 Pierre-Louis Cargnello — All rights reserved</p>
+  </footer>
+
+</div>
+
 </body>
 </html>
