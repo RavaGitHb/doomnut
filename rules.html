@@ -89,34 +89,46 @@
   /* ===== CONTENT ===== */
   .container{position:relative;z-index:10;max-width:880px;margin:0 auto;padding:24px 24px 80px}
 
-  /* ===== HEADER (mirrors CyberAppBar) ===== */
+  /* ===== HEADER (mirrors CyberAppBar from lib/widgets/common/cyber_app_bar.dart) ===== */
   .app-bar{
-    display:flex;align-items:center;justify-content:space-between;
     padding:14px 4px 24px;
     border-bottom:1px solid var(--border-faint);
     margin-bottom:32px;
   }
-  .back-link{
-    display:inline-flex;align-items:center;gap:8px;
-    color:var(--cyan);
-    text-decoration:none;
-    font-weight:600;
-    font-size:0.82rem;
-    letter-spacing:0.20em;
-    text-transform:uppercase;
-    text-shadow:0 0 6px rgba(128,222,234,0.5);
+  .app-bar-top{display:flex;align-items:center;justify-content:flex-start;margin-bottom:14px}
+  .back-btn-icon{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:8px;
+    border:2px solid var(--cyan);
+    border-radius:8px;
+    background:transparent;
+    cursor:pointer;
     transition:all 0.2s;
+    text-decoration:none;
   }
-  .back-link::before{content:'←';font-size:1.05rem}
-  .back-link:hover{text-shadow:0 0 12px rgba(128,222,234,0.9)}
-
+  .back-btn-icon:hover{
+    background:rgba(128,222,234,0.10);
+    box-shadow:0 0 14px rgba(128,222,234,0.45);
+  }
+  .back-btn-icon:active{transform:scale(0.94)}
+  .back-arrow{
+    display:block;
+    width:22px;height:22px;
+    background-color:var(--cyan);
+    -webkit-mask-image:url('support_assets/fleche.png');
+    mask-image:url('support_assets/fleche.png');
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    filter:drop-shadow(0 0 4px rgba(128,222,234,0.5));
+  }
   .page-title{
     font-weight:700;
-    font-size:1.05rem;
+    font-size:1.45rem;
     color:var(--cyan);
     letter-spacing:0.22em;
     text-transform:uppercase;
-    text-shadow:0 0 10px rgba(128,222,234,0.6);
+    text-shadow:0 0 12px rgba(128,222,234,0.6), 0 0 4px rgba(128,222,234,0.4);
   }
 
   /* ===== SECTIONS ===== */
@@ -442,9 +454,12 @@
 <div class="container">
 
   <div class="app-bar">
-    <a class="back-link" href="support.html">Back</a>
-    <div class="page-title">Game Rules</div>
-    <span style="width:60px"></span>
+    <div class="app-bar-top">
+      <a class="back-btn-icon" href="support.html" aria-label="Back to support">
+        <span class="back-arrow"></span>
+      </a>
+    </div>
+    <h1 class="page-title">Game Rules</h1>
   </div>
 
   <!-- BRIEFING -->
