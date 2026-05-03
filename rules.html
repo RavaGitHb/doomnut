@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050508">
+<title>DOOMNUT — Game Rules</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050508;
+    --cyan:#80DEEA;
+    --cyan-strong:#00E5FF;
+    --red:#FF1A1A;
+    --red-virus:#FF1744;
+    --teal:#003333;
+    --purple:#7C4DFF;
+    --cream:#F5F5DC;
+    --wager-low:#1AB800;
+    --wager-medium:#008BFF;
+    --wager-high:#BB00FF;
+    --text:rgba(255,255,255,0.85);
+    --text-muted:#888888;
+    --border-faint:rgba(128,222,234,0.20);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    min-height:100%;
+    background:#000;
+    color:var(--text);
+    font-family:'Montserrat',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  /* ===== STARFIELD ===== */
+  .space{position:fixed;inset:0;z-index:0;background:var(--bg);overflow:hidden}
+  .stars{position:absolute;left:-200px;right:-200px;top:0;height:100%;background-repeat:repeat;will-change:transform}
+  .stars.s1{
+    background-image:
+      radial-gradient(1px 1px at 20px 30px,#fff,transparent),
+      radial-gradient(1px 1px at 40px 70px,rgba(255,255,255,0.7),transparent),
+      radial-gradient(1px 1px at 90px 40px,rgba(255,255,255,0.6),transparent),
+      radial-gradient(1px 1px at 130px 80px,#fff,transparent),
+      radial-gradient(1px 1px at 160px 120px,rgba(255,255,255,0.7),transparent),
+      radial-gradient(1px 1px at 50px 160px,#fff,transparent),
+      radial-gradient(1px 1px at 180px 200px,#fff,transparent),
+      radial-gradient(1px 1px at 30px 230px,rgba(255,255,255,0.5),transparent),
+      radial-gradient(1px 1px at 70px 280px,#fff,transparent),
+      radial-gradient(1px 1px at 110px 320px,rgba(255,255,255,0.7),transparent);
+    background-size:200px 350px;
+    animation:drift1 240s linear infinite;
+    opacity:0.85;
+  }
+  .stars.s2{
+    background-image:
+      radial-gradient(1.5px 1.5px at 30px 50px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 130px 90px,rgba(255,255,255,0.85),transparent),
+      radial-gradient(1.5px 1.5px at 200px 30px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 70px 180px,rgba(128,222,234,0.85),transparent),
+      radial-gradient(1.5px 1.5px at 250px 220px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 180px 280px,rgba(255,255,255,0.7),transparent);
+    background-size:300px 350px;
+    animation:drift2 140s linear infinite, twinkle 6s ease-in-out infinite;
+  }
+  .stars.s3{
+    background-image:
+      radial-gradient(2.5px 2.5px at 80px 60px,#fff,transparent),
+      radial-gradient(3px 3px at 220px 140px,rgba(128,222,234,1),transparent),
+      radial-gradient(2px 2px at 350px 200px,#fff,transparent),
+      radial-gradient(3px 3px at 120px 300px,rgba(128,222,234,0.9),transparent),
+      radial-gradient(2.5px 2.5px at 280px 380px,#fff,transparent);
+    background-size:420px 450px;
+    animation:drift3 70s linear infinite, twinkle 3s ease-in-out infinite;
+    filter:drop-shadow(0 0 3px rgba(128,222,234,0.6));
+  }
+  @keyframes drift1{from{transform:translateX(0)}to{transform:translateX(-200px)}}
+  @keyframes drift2{from{transform:translateX(0)}to{transform:translateX(-300px)}}
+  @keyframes drift3{from{transform:translateX(0)}to{transform:translateX(-420px)}}
+  @keyframes twinkle{0%,100%{filter:brightness(1) drop-shadow(0 0 3px rgba(128,222,234,0.6))}50%{filter:brightness(0.55) drop-shadow(0 0 1px rgba(128,222,234,0.3))}}
+
+  .scanlines{
+    position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(0,0,0,0.20) 2px,rgba(0,0,0,0.20) 4px);
+  }
+
+  /* ===== CONTENT ===== */
+  .container{position:relative;z-index:10;max-width:880px;margin:0 auto;padding:24px 24px 80px}
+
+  /* ===== HEADER (mirrors CyberAppBar) ===== */
+  .app-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 4px 24px;
+    border-bottom:1px solid var(--border-faint);
+    margin-bottom:32px;
+  }
+  .back-link{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--cyan);
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.82rem;
+    letter-spacing:0.20em;
+    text-transform:uppercase;
+    text-shadow:0 0 6px rgba(128,222,234,0.5);
+    transition:all 0.2s;
+  }
+  .back-link::before{content:'←';font-size:1.05rem}
+  .back-link:hover{text-shadow:0 0 12px rgba(128,222,234,0.9)}
+
+  .page-title{
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--cyan);
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    text-shadow:0 0 10px rgba(128,222,234,0.6);
+  }
+
+  /* ===== SECTIONS ===== */
+  .section{margin-bottom:36px}
+  .section-title{
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:14px;
+  }
+  .section-title::before{
+    content:'';
+    display:inline-block;
+    width:4px;height:18px;
+    background:var(--cyan);
+    box-shadow:0 0 8px rgba(128,222,234,0.6);
+  }
+  .section-title h2{
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--cyan);
+    letter-spacing:0.20em;
+    text-transform:uppercase;
+    text-shadow:0 0 10px rgba(128,222,234,0.5);
+  }
+
+  /* ===== GLASS CARD (mirrors _GlassCard) ===== */
+  .card{
+    background:rgba(0,0,0,0.65);
+    border:1px solid rgba(128,222,234,0.35);
+    border-radius:8px;
+    padding:18px 20px;
+    box-shadow:0 0 24px rgba(128,222,234,0.08);
+  }
+  .card .body-line{
+    margin:6px 0;
+    color:rgba(255,255,255,0.92);
+    font-size:0.95rem;
+    line-height:1.55;
+  }
+  .card .sub-title{
+    font-weight:700;
+    color:#fff;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    font-size:0.85rem;
+    margin:4px 0 10px;
+  }
+
+  /* ===== ROLES ===== */
+  .role-row{
+    display:flex;align-items:flex-start;gap:14px;
+    padding:8px 0;
+  }
+  .role-badge{
+    width:48px;height:48px;flex-shrink:0;
+    border-radius:50%;
+    border:2px solid currentColor;
+    background-color:rgba(0,0,0,0);
+    box-shadow:0 0 10px rgba(255,255,255,0.05), inset 0 0 0 99px color-mix(in srgb, currentColor 20%, transparent);
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .role-badge::before{
+    /* the icon lives here */
+    content:'';
+    width:80%;height:80%;
+    background-color:currentColor;
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    filter:drop-shadow(0 0 6px currentColor);
+  }
+  .role-officer{color:var(--cyan-strong)}
+  .role-officer .role-badge::before{
+    -webkit-mask-image:url('support_assets/iconofficier.png');
+    mask-image:url('support_assets/iconofficier.png');
+  }
+  .role-crew{color:var(--cream)}
+  .role-crew .role-badge::before{
+    -webkit-mask-image:url('support_assets/iconequipage.png');
+    mask-image:url('support_assets/iconequipage.png');
+  }
+  /* Virus uses BlendMode.modulate — preserves icon detail tinted with red */
+  .role-virus{color:var(--red-virus)}
+  .role-virus .role-badge::before{
+    background-color:var(--red-virus);
+    background-image:url('support_assets/iconvirus.webp');
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-blend-mode:multiply;
+    -webkit-mask-image:url('support_assets/iconvirus.png');
+    mask-image:url('support_assets/iconvirus.png');
+  }
+  .role-parasite{color:var(--purple)}
+  .role-parasite .role-badge::before{
+    width:90%;height:90%;
+    -webkit-mask-image:url('support_assets/iconparasite4.png');
+    mask-image:url('support_assets/iconparasite4.png');
+  }
+  .role-text{flex:1;min-width:0}
+  .role-name{
+    font-weight:700;
+    font-size:0.92rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    margin-bottom:5px;
+    text-shadow:0 0 8px currentColor;
+  }
+  .role-desc{
+    font-size:0.92rem;
+    color:rgba(255,255,255,0.88);
+    line-height:1.5;
+  }
+
+  /* ===== FLOW STEPS ===== */
+  .step{
+    display:flex;align-items:flex-start;gap:14px;
+    padding:8px 0;
+  }
+  .step-num{
+    width:40px;height:40px;flex-shrink:0;
+    border-radius:50%;
+    border:2px solid var(--cyan);
+    background:rgba(0,51,51,0.55);
+    color:var(--cyan);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:0.95rem;
+    text-shadow:0 0 6px rgba(128,222,234,0.7);
+    box-shadow:0 0 12px rgba(128,222,234,0.25), inset 0 0 8px rgba(128,222,234,0.15);
+  }
+  .step-text{flex:1;min-width:0}
+  .step-label{
+    font-weight:700;
+    font-size:0.88rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    text-shadow:0 0 6px rgba(128,222,234,0.4);
+    margin-bottom:4px;
+  }
+  .step-detail{
+    font-size:0.92rem;
+    color:rgba(255,255,255,0.88);
+    line-height:1.5;
+  }
+
+  /* ===== WAGER BUTTONS ===== */
+  .wager-list{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+  .wager{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 22px;
+    background:rgba(0,51,51,0.65);
+    border:2px solid currentColor;
+    border-radius:8px;
+    box-shadow:0 0 16px color-mix(in srgb, currentColor 35%, transparent);
+  }
+  .wager-low{color:var(--wager-low)}
+  .wager-medium{color:var(--wager-medium)}
+  .wager-high{color:var(--wager-high)}
+  .wager-left{display:flex;flex-direction:column;gap:2px}
+  .wager-points{
+    font-weight:900;
+    font-size:1.30rem;
+    color:currentColor;
+    text-shadow:0 0 10px currentColor;
+    letter-spacing:0.05em;
+  }
+  .wager-level{
+    font-weight:700;
+    font-size:0.70rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:currentColor;
+    opacity:0.92;
+  }
+  .wager-time{
+    font-weight:700;
+    font-size:1.0rem;
+    letter-spacing:0.10em;
+    color:currentColor;
+    text-shadow:0 0 8px currentColor;
+  }
+
+  /* ===== SCORING GRID (4 role cards) ===== */
+  .points-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:20px;
+  }
+  .points-card{
+    position:relative;
+    overflow:hidden;
+    padding:14px;
+    border:1px solid color-mix(in srgb, currentColor 70%, transparent);
+    border-radius:8px;
+    background:linear-gradient(135deg, color-mix(in srgb, currentColor 18%, transparent), color-mix(in srgb, currentColor 6%, transparent));
+    box-shadow:0 0 18px color-mix(in srgb, currentColor 28%, transparent);
+    min-height:200px;
+  }
+  /* watermark icon */
+  .points-card::before{
+    content:'';
+    position:absolute;
+    top:50%;left:50%;
+    width:130px;height:130px;
+    transform:translate(-50%,-50%);
+    background-color:currentColor;
+    opacity:0.18;
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    pointer-events:none;
+    z-index:0;
+  }
+  .points-card.role-officer::before{
+    -webkit-mask-image:url('support_assets/iconofficier.png');
+    mask-image:url('support_assets/iconofficier.png');
+  }
+  .points-card.role-crew::before{
+    -webkit-mask-image:url('support_assets/iconequipage.png');
+    mask-image:url('support_assets/iconequipage.png');
+  }
+  /* Virus watermark uses modulate too */
+  .points-card.role-virus::before{
+    background-color:var(--red-virus);
+    background-image:url('support_assets/iconvirus.webp');
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-blend-mode:multiply;
+    -webkit-mask-image:url('support_assets/iconvirus.png');
+    mask-image:url('support_assets/iconvirus.png');
+    opacity:0.25;
+  }
+  .points-card.role-parasite::before{
+    width:160px;height:160px;
+    -webkit-mask-image:url('support_assets/iconparasite4.png');
+    mask-image:url('support_assets/iconparasite4.png');
+  }
+  .points-card-content{position:relative;z-index:1}
+  .points-card-title{
+    font-weight:700;
+    font-size:0.85rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:currentColor;
+    text-shadow:0 0 8px currentColor;
+    margin-bottom:10px;
+  }
+  .points-line{margin-bottom:8px}
+  .points-line-label{
+    font-weight:700;
+    font-size:0.70rem;
+    letter-spacing:0.10em;
+    text-transform:uppercase;
+    margin-bottom:1px;
+  }
+  .points-line.victory .points-line-label{color:var(--cyan);text-shadow:0 0 6px rgba(128,222,234,0.5)}
+  .points-line.defeat .points-line-label{color:var(--red);text-shadow:0 0 6px rgba(255,26,26,0.5)}
+  .points-line.trap .points-line-label{color:var(--purple);text-shadow:0 0 6px rgba(124,77,255,0.5)}
+  .points-line-value{
+    font-size:0.78rem;
+    color:rgba(255,255,255,0.88);
+    line-height:1.35;
+    white-space:pre-line;
+  }
+
+  /* ===== BACK BUTTON ===== */
+  .back-btn-wrap{margin-top:36px;display:flex;justify-content:center}
+  .back-btn{
+    display:inline-block;
+    padding:16px 48px;
+    background:rgba(0,51,51,0.85);
+    border:2px solid var(--cyan);
+    border-radius:8px;
+    color:var(--cyan);
+    text-decoration:none;
+    font-weight:700;
+    font-size:0.98rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    text-shadow:0 0 8px rgba(128,222,234,0.7);
+    box-shadow:0 0 18px rgba(128,222,234,0.3);
+    transition:all 0.25s;
+  }
+  .back-btn:hover{
+    background:rgba(0,51,51,0.95);
+    box-shadow:0 0 32px rgba(128,222,234,0.55);
+    transform:translateY(-2px);
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    margin-top:48px;padding-top:24px;
+    border-top:1px solid var(--border-faint);
+    text-align:center;
+    color:var(--text-muted);
+    font-size:0.78rem;letter-spacing:0.15em;font-weight:500;
+  }
+  footer a{color:var(--cyan);text-decoration:none;transition:all 0.2s}
+  footer a:hover{text-shadow:0 0 8px rgba(128,222,234,0.6)}
+
+  @media (max-width:540px){
+    .container{padding:16px 16px 60px}
+    .points-grid{grid-template-columns:1fr}
+    .wager{padding:12px 16px}
+    .wager-points{font-size:1.15rem}
+    .wager-time{font-size:0.92rem}
+    .role-badge{width:42px;height:42px}
+  }
+</style>
+</head>
+<body>
+
+<div class="space">
+  <div class="stars s1"></div>
+  <div class="stars s2"></div>
+  <div class="stars s3"></div>
+</div>
+<div class="scanlines"></div>
+
+<div class="container">
+
+  <div class="app-bar">
+    <a class="back-link" href="support.html">Back</a>
+    <div class="page-title">Game Rules</div>
+    <span style="width:60px"></span>
+  </div>
+
+  <!-- BRIEFING -->
+  <div class="section">
+    <div class="section-title"><h2>Briefing</h2></div>
+    <div class="card">
+      <p class="body-line">Find the Secret Word by questioning the Officer. Starting from the Officer and going clockwise, players take turns asking questions or making proposals. As soon as someone proposes the exact word, the mission ends.</p>
+      <p class="body-line">If someone proposes the Parasite's word, they win the mission. There will be no vote.</p>
+      <p class="body-line">Players vote to designate the Virus, if the word was found.</p>
+      <p class="body-line">The Parasite role can be toggled on or off.</p>
+    </div>
+  </div>
+
+  <!-- ROLES -->
+  <div class="section">
+    <div class="section-title"><h2>Roles</h2></div>
+    <div class="card">
+      <div class="role-row role-officer">
+        <div class="role-badge"></div>
+        <div class="role-text">
+          <div class="role-name">Officer</div>
+          <div class="role-desc">Knows the word and picks the wager. Only answers questions with YES/NO.</div>
+        </div>
+      </div>
+      <div class="role-row role-crew">
+        <div class="role-badge"></div>
+        <div class="role-text">
+          <div class="role-name">Crew</div>
+          <div class="role-desc">Looks for the word by asking questions or making proposals.</div>
+        </div>
+      </div>
+      <div class="role-row role-virus">
+        <div class="role-badge"></div>
+        <div class="role-text">
+          <div class="role-name">Virus</div>
+          <div class="role-desc">Knows the word, asks questions and helps in its discovery without getting caught.</div>
+        </div>
+      </div>
+      <div class="role-row role-parasite">
+        <div class="role-badge"></div>
+        <div class="role-text">
+          <div class="role-name">Parasite (optional)</div>
+          <div class="role-desc">Receives a word close to the secret word. If someone proposes their word, they win the mission. There will be no vote. To score points, they can also try to make the mission fail.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISSION FLOW -->
+  <div class="section">
+    <div class="section-title"><h2>Mission Flow</h2></div>
+    <div class="card">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <div class="step-label">Timer &amp; Wager</div>
+          <div class="step-detail">The Officer chooses the duration: 2 min 30 / 3 min 30 / 5 min 30. The shorter the timer, the higher the wager.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <div class="step-label">Questioning</div>
+          <div class="step-detail">Starting from the Officer and going clockwise, players take turns asking questions or making proposals. Answers are strictly YES / NO.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <div class="step-label">Instant End</div>
+          <div class="step-detail">As soon as the secret word OR the Parasite's word is proposed, the mission ends.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <div class="step-label">Vote</div>
+          <div class="step-detail">If the Officer's word was found, players debate and vote on who the Virus is.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORING SYSTEM -->
+  <div class="section">
+    <div class="section-title"><h2>Scoring System</h2></div>
+    <div class="card">
+      <div class="sub-title">Wager / Timer</div>
+      <div class="wager-list">
+        <div class="wager wager-low">
+          <div class="wager-left">
+            <div class="wager-points">2 PTS</div>
+            <div class="wager-level">Low Wager</div>
+          </div>
+          <div class="wager-time">5 MIN 30</div>
+        </div>
+        <div class="wager wager-medium">
+          <div class="wager-left">
+            <div class="wager-points">4 PTS</div>
+            <div class="wager-level">Medium Wager</div>
+          </div>
+          <div class="wager-time">3 MIN 30</div>
+        </div>
+        <div class="wager wager-high">
+          <div class="wager-left">
+            <div class="wager-points">6 PTS</div>
+            <div class="wager-level">High Wager</div>
+          </div>
+          <div class="wager-time">2 MIN 30</div>
+        </div>
+      </div>
+
+      <div class="points-grid">
+        <div class="points-card role-officer">
+          <div class="points-card-content">
+            <div class="points-card-title">Officer</div>
+            <div class="points-line victory">
+              <div class="points-line-label">Victory</div>
+              <div class="points-line-value">Wager value
++1 pt if the Virus is caught</div>
+            </div>
+            <div class="points-line defeat">
+              <div class="points-line-label">Defeat</div>
+              <div class="points-line-value">-2 pts</div>
+            </div>
+            <div class="points-line trap">
+              <div class="points-line-label">Trap</div>
+              <div class="points-line-value">0 pt</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="points-card role-crew">
+          <div class="points-card-content">
+            <div class="points-card-title">Crew</div>
+            <div class="points-line victory">
+              <div class="points-line-label">Victory</div>
+              <div class="points-line-value">1 pt
++1 pt if the Virus is caught</div>
+            </div>
+            <div class="points-line defeat">
+              <div class="points-line-label">Defeat</div>
+              <div class="points-line-value">-1 pt</div>
+            </div>
+            <div class="points-line trap">
+              <div class="points-line-label">Trap</div>
+              <div class="points-line-value">0 pt</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="points-card role-virus">
+          <div class="points-card-content">
+            <div class="points-card-title">Virus</div>
+            <div class="points-line victory">
+              <div class="points-line-label">Victory</div>
+              <div class="points-line-value">Wager / 2 + 3 pts
+0 pt if the Virus is caught</div>
+            </div>
+            <div class="points-line defeat">
+              <div class="points-line-label">Defeat</div>
+              <div class="points-line-value">-1 pt</div>
+            </div>
+            <div class="points-line trap">
+              <div class="points-line-label">Trap</div>
+              <div class="points-line-value">0 pt</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="points-card role-parasite">
+          <div class="points-card-content">
+            <div class="points-card-title">Parasite</div>
+            <div class="points-line victory">
+              <div class="points-line-label">Victory</div>
+              <div class="points-line-value">0 pt
++1 pt if the Virus is caught</div>
+            </div>
+            <div class="points-line defeat">
+              <div class="points-line-label">Defeat</div>
+              <div class="points-line-value">+2 pts</div>
+            </div>
+            <div class="points-line trap">
+              <div class="points-line-label">Trap</div>
+              <div class="points-line-value">+6 pts!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-title">Notes</div>
+      <p class="body-line">• Players cannot have a negative score.</p>
+      <p class="body-line">• Points accumulate mission after mission. The first to reach the target score wins the game (and eats the delicious chocolate donut).</p>
+    </div>
+  </div>
+
+  <div class="back-btn-wrap">
+    <a class="back-btn" href="support.html">Back to Support</a>
+  </div>
+
+  <footer>
+    <p>2026 Rava Studio &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="support.html">Support</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>

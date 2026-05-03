@@ -256,8 +256,20 @@
   .role-officer .role-icon{-webkit-mask-image:url('support_assets/iconofficier.png');mask-image:url('support_assets/iconofficier.png')}
   .role-crew{color:var(--cream)}
   .role-crew .role-icon{-webkit-mask-image:url('support_assets/iconequipage.png');mask-image:url('support_assets/iconequipage.png')}
+  /* Virus uses BlendMode.modulate in app (not srcIn) — preserves icon detail tinted with red.
+     Replicate via background-image (icon) + background-color (red) blended with multiply,
+     then masked to icon shape so transparent areas stay transparent. */
   .role-virus{color:var(--red-virus)}
-  .role-virus .role-icon{-webkit-mask-image:url('support_assets/iconvirus.png');mask-image:url('support_assets/iconvirus.png')}
+  .role-virus .role-icon{
+    background-color:var(--red-virus);
+    background-image:url('support_assets/iconvirus.webp');
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-blend-mode:multiply;
+    -webkit-mask-image:url('support_assets/iconvirus.png');
+    mask-image:url('support_assets/iconvirus.png');
+  }
   .role-parasite{color:var(--purple)}
   .role-parasite .role-icon{
     width:64px;height:64px;
@@ -272,6 +284,36 @@
     color:rgba(255,255,255,0.55);
     text-shadow:none;
   }
+
+  /* ============ RULES CTA ============ */
+  .rules-cta-wrap{text-align:center;margin-top:-18px;margin-bottom:54px}
+  .rules-cta{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 28px;
+    background:rgba(0,51,51,0.65);
+    border:2px solid var(--cyan);
+    border-radius:8px;
+    color:var(--cyan);
+    text-decoration:none;
+    font-weight:700;
+    font-size:0.92rem;
+    letter-spacing:0.20em;
+    text-transform:uppercase;
+    text-shadow:0 0 8px rgba(128,222,234,0.7);
+    box-shadow:0 0 18px rgba(128,222,234,0.25);
+    transition:all 0.25s;
+  }
+  .rules-cta:hover{
+    background:rgba(0,51,51,0.95);
+    box-shadow:0 0 32px rgba(128,222,234,0.55);
+    transform:translateY(-2px);
+  }
+  .rules-cta::after{
+    content:'→';
+    font-size:1.1rem;
+    transition:transform 0.25s;
+  }
+  .rules-cta:hover::after{transform:translateX(4px)}
 
   /* ============ CONTACT (CyberDialog style) ============ */
   .contact-box{
@@ -426,6 +468,10 @@
     <p>One Officer holds a secret word. The Crew tries to guess it through yes/no questions. But hidden among them, a Virus and a Parasite are pulling the mission in their own direction.</p>
   </section>
 
+  <div class="rules-cta-wrap">
+    <a class="rules-cta" href="rules.html">Read the Game Rules</a>
+  </div>
+
   <section>
     <h2>The Crew</h2>
     <div class="roles">
@@ -468,7 +514,7 @@
       <a class="email-btn" href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>
       <div class="contact-hint">Bug? Question? Idea? Drop us a line — every message is read.</div>
     </div>
-    <p class="left" style="margin-top:18px;color:var(--text-muted);font-size:0.88rem">When reporting a bug, please include your <strong class="cyan">device model</strong>, your <strong class="cyan">iOS version</strong>, and a short description of what happened. Screenshots are very welcome.</p>
+    <p class="left" style="margin-top:18px;color:var(--text-muted);font-size:0.88rem">When reporting a bug, please include your <strong class="cyan">device model</strong>, your <strong class="cyan">OS version</strong> (Android or iOS), and a short description of what happened. Screenshots are very welcome.</p>
   </section>
 
   <section>
@@ -499,18 +545,8 @@
     </div>
   </section>
 
-  <section>
-    <h2>Mission Log</h2>
-    <div class="gallery">
-      <img src="screenshots/screen_01.png" alt="Doomnut screenshot 1" onerror="this.style.display='none'">
-      <img src="screenshots/screen_02.png" alt="Doomnut screenshot 2" onerror="this.style.display='none'">
-      <img src="screenshots/screen_03.png" alt="Doomnut screenshot 3" onerror="this.style.display='none'">
-      <img src="screenshots/screen_04.png" alt="Doomnut screenshot 4" onerror="this.style.display='none'">
-    </div>
-  </section>
-
   <footer>
-    <p>2026 Rava Studio &nbsp;·&nbsp; <a href="index.html">Privacy Policy</a></p>
+    <p>2026 Rava Studio &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="rules.html">Rules</a></p>
   </footer>
 
 </div>
