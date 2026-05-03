@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050508">
+<title>DOOMNUT — Mission Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050508;
+    --cyan:#80DEEA;
+    --cyan-strong:#00E5FF;
+    --red:#FF1A1A;
+    --red-virus:#FF1744;
+    --teal:#003333;
+    --purple:#7C4DFF;
+    --cream:#F5F5DC;
+    --text:rgba(255,255,255,0.85);
+    --text-muted:#888888;
+    --border-faint:rgba(128,222,234,0.20);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    min-height:100%;
+    background:#000;
+    color:var(--text);
+    font-family:'Montserrat',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  /* ===== STARFIELD (3 layers, drift + twinkle) — mirrors space_background.dart ===== */
+  .space{position:fixed;inset:0;z-index:0;background:var(--bg);overflow:hidden}
+  .stars{position:absolute;left:-200px;right:-200px;top:0;height:100%;background-repeat:repeat;will-change:transform}
+  .stars.s1{
+    background-image:
+      radial-gradient(1px 1px at 20px 30px,#fff,transparent),
+      radial-gradient(1px 1px at 40px 70px,rgba(255,255,255,0.7),transparent),
+      radial-gradient(1px 1px at 90px 40px,rgba(255,255,255,0.6),transparent),
+      radial-gradient(1px 1px at 130px 80px,#fff,transparent),
+      radial-gradient(1px 1px at 160px 120px,rgba(255,255,255,0.7),transparent),
+      radial-gradient(1px 1px at 50px 160px,#fff,transparent),
+      radial-gradient(1px 1px at 180px 200px,#fff,transparent),
+      radial-gradient(1px 1px at 30px 230px,rgba(255,255,255,0.5),transparent),
+      radial-gradient(1px 1px at 70px 280px,#fff,transparent),
+      radial-gradient(1px 1px at 110px 320px,rgba(255,255,255,0.7),transparent);
+    background-size:200px 350px;
+    animation:drift1 240s linear infinite;
+    opacity:0.85;
+  }
+  .stars.s2{
+    background-image:
+      radial-gradient(1.5px 1.5px at 30px 50px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 130px 90px,rgba(255,255,255,0.85),transparent),
+      radial-gradient(1.5px 1.5px at 200px 30px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 70px 180px,rgba(128,222,234,0.85),transparent),
+      radial-gradient(1.5px 1.5px at 250px 220px,#fff,transparent),
+      radial-gradient(1.5px 1.5px at 180px 280px,rgba(255,255,255,0.7),transparent);
+    background-size:300px 350px;
+    animation:drift2 140s linear infinite, twinkle 6s ease-in-out infinite;
+  }
+  .stars.s3{
+    background-image:
+      radial-gradient(2.5px 2.5px at 80px 60px,#fff,transparent),
+      radial-gradient(3px 3px at 220px 140px,rgba(128,222,234,1),transparent),
+      radial-gradient(2px 2px at 350px 200px,#fff,transparent),
+      radial-gradient(3px 3px at 120px 300px,rgba(128,222,234,0.9),transparent),
+      radial-gradient(2.5px 2.5px at 280px 380px,#fff,transparent);
+    background-size:420px 450px;
+    animation:drift3 70s linear infinite, twinkle 3s ease-in-out infinite;
+    filter:drop-shadow(0 0 3px rgba(128,222,234,0.6));
+  }
+  @keyframes drift1{from{transform:translateX(0)}to{transform:translateX(-200px)}}
+  @keyframes drift2{from{transform:translateX(0)}to{transform:translateX(-300px)}}
+  @keyframes drift3{from{transform:translateX(0)}to{transform:translateX(-420px)}}
+  @keyframes twinkle{0%,100%{filter:brightness(1) drop-shadow(0 0 3px rgba(128,222,234,0.6))}50%{filter:brightness(0.55) drop-shadow(0 0 1px rgba(128,222,234,0.3))}}
+
+  /* Scanlines (DoomnutBackground useScanlines:true) */
+  .scanlines{
+    position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(0,0,0,0.20) 2px,rgba(0,0,0,0.20) 4px);
+  }
+
+  /* ===== CONTENT ===== */
+  .container{position:relative;z-index:10;max-width:880px;margin:0 auto;padding:24px 24px 80px}
+
+  /* ============ TITLE ============
+     Replicates exactly the home_screen.dart layered title:
+     - Layer 1 base (.title-base) at 0.9 opacity
+     - Shimmer sweep (.title-shimmer) — 5s linear like _shimmerController
+     - Layer 2 glow (.title-glow) — 4s reverse breathing + cyan halo + glitch tear
+  */
+  header{text-align:center;padding:20px 0 50px}
+  .title-wrap{
+    position:relative;
+    display:block;
+    width:min(720px,92vw);
+    aspect-ratio:560/175;
+    margin:0 auto;
+  }
+  .title-wrap > div{
+    position:absolute;inset:0;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:contain;
+    pointer-events:none;
+  }
+  .title-halo{
+    background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(128,222,234,0.55) 0%,rgba(128,222,234,0.20) 35%,transparent 70%);
+    filter:blur(28px);
+    animation:halo 4s ease-in-out infinite alternate;
+    z-index:0;
+  }
+  .title-base{
+    background-image:url('support_assets/doomnuttitre_layer1.webp');
+    opacity:0.90;
+    z-index:1;
+  }
+  .title-shimmer{
+    background-image:linear-gradient(105deg,transparent 35%,rgba(255,255,255,0.45) 50%,transparent 65%);
+    background-size:200% 100%;
+    -webkit-mask-image:url('support_assets/doomnuttitre_layer1.webp');
+    mask-image:url('support_assets/doomnuttitre_layer1.webp');
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    mix-blend-mode:screen;
+    animation:shimmer 5s linear infinite;
+    z-index:2;
+  }
+  .title-glow{
+    background-image:url('support_assets/doomnuttitre_layer2.webp');
+    animation:breath 4s ease-in-out infinite alternate;
+    transform-origin:center;
+    z-index:3;
+  }
+  /* GLITCH TEAR — 3 sub-layers (red/purple/cream), each flashes briefly */
+  .title-glitch{
+    -webkit-mask-image:url('support_assets/doomnuttitre_layer1.webp');
+    mask-image:url('support_assets/doomnuttitre_layer1.webp');
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    mix-blend-mode:screen;
+    opacity:0;
+    z-index:4;
+  }
+  .title-glitch.g-red{background-color:var(--red-virus);animation:glitchRed 5.7s steps(1,end) infinite}
+  .title-glitch.g-purple{background-color:var(--purple);animation:glitchPurple 7.3s steps(1,end) infinite}
+  .title-glitch.g-cream{background-color:var(--cream);animation:glitchCream 6.1s steps(1,end) infinite}
+
+  @keyframes shimmer{
+    from{background-position:-100% 0}
+    to{background-position:200% 0}
+  }
+  @keyframes breath{
+    from{transform:scale(1.0);opacity:0.5}
+    to{transform:scale(1.06);opacity:1.0}
+  }
+  @keyframes halo{
+    from{opacity:0.30}
+    to{opacity:0.95}
+  }
+  @keyframes glitchRed{
+    0%,38%,42%,100%{opacity:0;transform:translate(0,0)}
+    39%{opacity:0.55;transform:translate(-3px,1px)}
+    40%{opacity:0;transform:translate(0,0)}
+    41%{opacity:0.4;transform:translate(2px,-1px)}
+  }
+  @keyframes glitchPurple{
+    0%,67%,71%,100%{opacity:0;transform:translate(0,0)}
+    68%{opacity:0.45;transform:translate(2px,-2px)}
+    70%{opacity:0.30;transform:translate(-1px,1px)}
+  }
+  @keyframes glitchCream{
+    0%,52%,55%,100%{opacity:0;transform:translate(0,0)}
+    53%{opacity:0.30;transform:translate(-2px,2px)}
+    54%{opacity:0;transform:translate(0,0)}
+  }
+
+  .tagline{
+    margin-top:20px;
+    color:var(--text-muted);
+    font-size:0.78rem;
+    letter-spacing:0.30em;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+
+  /* ============ SECTIONS ============ */
+  section{margin-bottom:54px}
+  h2{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:1.25rem;
+    color:var(--cyan);
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    margin-bottom:24px;
+    text-align:center;
+    text-shadow:0 0 10px rgba(128,222,234,0.50);
+  }
+  p{margin-bottom:14px;font-size:1rem;font-weight:400;text-align:center}
+  p.left{text-align:left}
+  strong.cyan{color:var(--cyan);text-shadow:0 0 8px rgba(128,222,234,0.5);font-weight:600}
+
+  /* ============ THE CREW (Roles) ============
+     Mirrors onboarding_screen.dart _buildSlide2Body:
+     - Row layout with role icon + role name (uppercase, color, glow) + description
+     - Icon size 56px base, parasite 1.12x = 64px
+     - Color tinting via mask-image with PNG (more reliable than webp)
+  */
+  .roles{margin-top:8px}
+  .role{
+    display:flex;
+    align-items:center;
+    padding:16px 18px;
+    margin-bottom:12px;
+    background:rgba(0,0,0,0.40);
+    border:1px solid var(--border-faint);
+    border-radius:8px;
+    transition:all 0.25s;
+  }
+  .role:hover{
+    border-color:rgba(128,222,234,0.5);
+    box-shadow:0 0 18px rgba(128,222,234,0.18);
+  }
+  .role-icon{
+    width:56px;height:56px;flex-shrink:0;
+    margin-right:18px;
+    background-color:currentColor;
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    filter:drop-shadow(0 0 8px currentColor);
+  }
+  .role-text{flex:1;min-width:0}
+  .role-name{
+    font-weight:700;
+    font-size:0.92rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    margin-bottom:5px;
+    text-shadow:0 0 8px currentColor;
+  }
+  .role-desc{
+    font-size:0.92rem;
+    color:rgba(255,255,255,0.85);
+    font-weight:400;
+    line-height:1.45;
+  }
+  .role-officer{color:var(--cyan-strong)}
+  .role-officer .role-icon{-webkit-mask-image:url('support_assets/iconofficier.png');mask-image:url('support_assets/iconofficier.png')}
+  .role-crew{color:var(--cream)}
+  .role-crew .role-icon{-webkit-mask-image:url('support_assets/iconequipage.png');mask-image:url('support_assets/iconequipage.png')}
+  .role-virus{color:var(--red-virus)}
+  .role-virus .role-icon{-webkit-mask-image:url('support_assets/iconvirus.png');mask-image:url('support_assets/iconvirus.png')}
+  .role-parasite{color:var(--purple)}
+  .role-parasite .role-icon{
+    width:64px;height:64px;
+    margin-right:18px;
+    -webkit-mask-image:url('support_assets/iconparasite4.png');
+    mask-image:url('support_assets/iconparasite4.png');
+  }
+  .optional-tag{
+    display:inline-block;margin-left:10px;
+    font-size:0.7rem;font-weight:600;
+    letter-spacing:0.20em;
+    color:rgba(255,255,255,0.55);
+    text-shadow:none;
+  }
+
+  /* ============ CONTACT (CyberDialog style) ============ */
+  .contact-box{
+    background:rgba(5,5,8,0.95);
+    border:2px solid var(--cyan);
+    border-radius:8px;
+    padding:36px 28px;
+    text-align:center;
+    box-shadow:
+      0 0 20px rgba(128,222,234,0.20),
+      0 5px 50px rgba(128,222,234,0.10);
+  }
+  .contact-icon{
+    width:60px;height:60px;
+    margin:0 auto 18px;
+    background-color:var(--cyan);
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    -webkit-mask-image:url('support_assets/iconadn.png');
+    mask-image:url('support_assets/iconadn.png');
+    filter:drop-shadow(0 0 12px rgba(128,222,234,0.7));
+  }
+  .contact-title{
+    color:var(--cyan);
+    font-size:1.05rem;font-weight:700;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    margin-bottom:18px;
+    text-shadow:0 0 10px rgba(128,222,234,0.6);
+  }
+  /* Email rendered as a TechButton */
+  .email-btn{
+    display:inline-block;
+    padding:16px 32px;
+    background:rgba(0,51,51,0.80);
+    border:2px solid var(--cyan);
+    border-radius:8px;
+    color:var(--cyan);
+    text-decoration:none;
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:0.10em;
+    text-shadow:0 0 8px rgba(128,222,234,0.7);
+    box-shadow:0 0 18px rgba(128,222,234,0.30);
+    transition:all 0.25s;
+  }
+  .email-btn:hover{
+    background:rgba(0,51,51,0.95);
+    box-shadow:0 0 32px rgba(128,222,234,0.55);
+    transform:translateY(-2px);
+  }
+  .contact-hint{
+    margin-top:22px;
+    color:var(--text-muted);
+    font-size:0.85rem;
+    text-align:center;
+  }
+
+  /* ============ FAQ ============ */
+  .faq-item{
+    background:rgba(5,5,8,0.85);
+    border:1px solid var(--border-faint);
+    border-radius:8px;
+    padding:18px 22px;
+    margin-bottom:14px;
+    transition:all 0.25s;
+  }
+  .faq-item:hover{
+    border-color:rgba(128,222,234,0.5);
+    box-shadow:0 0 18px rgba(128,222,234,0.18);
+  }
+  .faq-q{
+    color:var(--cyan);
+    font-weight:600;
+    font-size:0.96rem;
+    letter-spacing:0.04em;
+    margin-bottom:8px;
+    text-shadow:0 0 6px rgba(128,222,234,0.4);
+  }
+  .faq-a{color:rgba(255,255,255,0.85);font-size:0.92rem;font-weight:400;line-height:1.6}
+  .faq-a a{color:var(--cyan);text-decoration:none;border-bottom:1px dotted var(--cyan)}
+
+  /* ============ GALLERY ============ */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:14px;
+  }
+  .gallery img{
+    width:100%;height:auto;display:block;
+    border:1px solid var(--border-faint);
+    border-radius:8px;
+    transition:all 0.25s;
+  }
+  .gallery img:hover{
+    border-color:var(--cyan);
+    box-shadow:0 0 24px rgba(128,222,234,0.40);
+    transform:translateY(-2px);
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    margin-top:56px;padding-top:28px;
+    border-top:1px solid var(--border-faint);
+    text-align:center;
+    color:var(--text-muted);
+    font-size:0.78rem;letter-spacing:0.15em;font-weight:500;
+  }
+  footer a{color:var(--cyan);text-decoration:none;transition:all 0.2s}
+  footer a:hover{text-shadow:0 0 8px rgba(128,222,234,0.6)}
+
+  @media (max-width:480px){
+    .container{padding:16px 16px 60px}
+    h2{font-size:1.05rem;letter-spacing:0.14em}
+    .role{padding:14px}
+    .role-icon{width:46px;height:46px;margin-right:14px}
+    .role-parasite .role-icon{width:52px;height:52px;margin-right:14px}
+    .contact-box{padding:28px 18px}
+    .contact-icon{width:52px;height:52px}
+    .email-btn{font-size:0.98rem;padding:14px 22px;letter-spacing:0.06em}
+  }
+</style>
+</head>
+<body>
+
+<div class="space">
+  <div class="stars s1"></div>
+  <div class="stars s2"></div>
+  <div class="stars s3"></div>
+</div>
+<div class="scanlines"></div>
+
+<div class="container">
+
+  <header>
+    <div class="title-wrap">
+      <div class="title-halo"></div>
+      <div class="title-base"></div>
+      <div class="title-shimmer"></div>
+      <div class="title-glow"></div>
+      <div class="title-glitch g-red"></div>
+      <div class="title-glitch g-purple"></div>
+      <div class="title-glitch g-cream"></div>
+    </div>
+    <div class="tagline">Mission Support</div>
+  </header>
+
+  <section>
+    <h2>About the Mission</h2>
+    <p>Doomnut is a social deduction party game for <strong class="cyan">4 to 8 players</strong>, designed to play together on a single device.</p>
+    <p>One Officer holds a secret word. The Crew tries to guess it through yes/no questions. But hidden among them, a Virus and a Parasite are pulling the mission in their own direction.</p>
+  </section>
+
+  <section>
+    <h2>The Crew</h2>
+    <div class="roles">
+      <div class="role role-officer">
+        <div class="role-icon"></div>
+        <div class="role-text">
+          <div class="role-name">Officer</div>
+          <div class="role-desc">Knows the secret word and sets the wager. Answers only YES or NO.</div>
+        </div>
+      </div>
+      <div class="role role-crew">
+        <div class="role-icon"></div>
+        <div class="role-text">
+          <div class="role-name">Crew</div>
+          <div class="role-desc">Hunts the secret word with sharp, well-placed questions.</div>
+        </div>
+      </div>
+      <div class="role role-virus">
+        <div class="role-icon"></div>
+        <div class="role-text">
+          <div class="role-name">Virus</div>
+          <div class="role-desc">Knows the word too, but plays from the shadows to mislead the Crew.</div>
+        </div>
+      </div>
+      <div class="role role-parasite">
+        <div class="role-icon"></div>
+        <div class="role-text">
+          <div class="role-name">Parasite<span class="optional-tag">OPTIONAL</span></div>
+          <div class="role-desc">Got a different word. Wants their word guessed instead of the Officer's.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Direct Channel</h2>
+    <div class="contact-box">
+      <div class="contact-icon"></div>
+      <div class="contact-title">Reach the Crew</div>
+      <a class="email-btn" href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>
+      <div class="contact-hint">Bug? Question? Idea? Drop us a line — every message is read.</div>
+    </div>
+    <p class="left" style="margin-top:18px;color:var(--text-muted);font-size:0.88rem">When reporting a bug, please include your <strong class="cyan">device model</strong>, your <strong class="cyan">iOS version</strong>, and a short description of what happened. Screenshots are very welcome.</p>
+  </section>
+
+  <section>
+    <h2>Field Manual</h2>
+    <div class="faq-item">
+      <div class="faq-q">How many players are needed?</div>
+      <div class="faq-a">Doomnut is designed for 4 to 8 players, all on a single device.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do I need an internet connection?</div>
+      <div class="faq-a">No. The whole game runs offline. Internet is only used for optional features like ads and in-app purchases.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What languages are available?</div>
+      <div class="faq-a">English and French. The app follows your device language by default and can be changed in Settings.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I reset my progress or unlocked words?</div>
+      <div class="faq-a">Open Settings inside the app. All data is stored locally on your device.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">I lost my purchase after reinstalling. What do I do?</div>
+      <div class="faq-a">Open the in-app shop and tap "Restore purchases". If the issue persists, email us at the address above with your transaction ID.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I report a bug or suggest a feature?</div>
+      <div class="faq-a">Email <a href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>. Every message is read by a real human.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mission Log</h2>
+    <div class="gallery">
+      <img src="screenshots/screen_01.png" alt="Doomnut screenshot 1" onerror="this.style.display='none'">
+      <img src="screenshots/screen_02.png" alt="Doomnut screenshot 2" onerror="this.style.display='none'">
+      <img src="screenshots/screen_03.png" alt="Doomnut screenshot 3" onerror="this.style.display='none'">
+      <img src="screenshots/screen_04.png" alt="Doomnut screenshot 4" onerror="this.style.display='none'">
+    </div>
+  </section>
+
+  <footer>
+    <p>2026 Rava Studio &nbsp;·&nbsp; <a href="index.html">Privacy Policy</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
