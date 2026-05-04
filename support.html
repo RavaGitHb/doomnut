@@ -610,9 +610,16 @@
 
   @media (max-width:540px){
     .container{padding:14px 12px 50px}
-    header{padding:14px 0 30px}
-    .title-wrap{width:100%}
-    .tagline{margin-top:14px;font-size:0.62rem;letter-spacing:0.20em}
+    header{padding:6px 0 24px}
+    .title-wrap{
+      width:100vw;
+      max-width:none;
+      margin-left:calc(50% - 50vw);
+      margin-right:calc(50% - 50vw);
+      transform:scale(1.10);
+      transform-origin:center center;
+    }
+    .tagline{margin-top:20px;font-size:0.62rem;letter-spacing:0.20em}
     section{margin-bottom:38px}
     h2{font-size:0.95rem;letter-spacing:0.13em;margin-bottom:18px}
     p{font-size:0.88rem}
@@ -638,8 +645,24 @@
     .faq-a{font-size:0.82rem}
     .nav-link{padding:9px 14px;font-size:0.66rem;letter-spacing:0.14em}
     .page-nav{gap:8px;padding-top:24px}
-    .lang-switch{top:10px;right:10px;gap:5px}
-    .lang-btn{padding:5px 9px;font-size:0.60rem;letter-spacing:0.14em;border-width:1px}
+    .lang-switch{
+      top:8px;right:8px;
+      flex-direction:column;
+      gap:4px;
+      will-change:transform;
+      -webkit-transform:translateZ(0);
+      transform:translateZ(0);
+    }
+    .lang-btn{
+      padding:6px 10px;
+      font-size:0.58rem;
+      letter-spacing:0.12em;
+      min-width:46px;
+      border-width:1px;
+      background:rgba(0,30,40,0.55);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+    }
     footer{font-size:0.62rem}
   }
   @media (max-width:380px){
