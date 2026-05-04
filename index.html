@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050508">
-<title>DOOMNUT — Mission Support</title>
+<title>DOOMNUT — A social deduction party game</title>
 <meta name="description" content="DOOMNUT — A social deduction party game for 4 to 8 players on a single device. Find the secret word, unmask the Virus, beat the Parasite. Free on Google Play.">
 <link rel="canonical" href="https://ravagithb.github.io/doomnut/">
 <link rel="icon" type="image/png" href="support_assets/favicon.png">
 <link rel="apple-touch-icon" href="support_assets/favicon.png">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="DOOMNUT — Mission Support">
+<meta property="og:title" content="DOOMNUT — A social deduction party game">
 <meta property="og:description" content="A social deduction party game for 4 to 8 players on a single device. Find the secret word, unmask the Virus, beat the Parasite.">
 <meta property="og:image" content="https://ravagithb.github.io/doomnut/support_assets/og_image.png">
 <meta property="og:image:width" content="1024">
@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="DOOMNUT">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DOOMNUT — Mission Support">
+<meta name="twitter:title" content="DOOMNUT — A social deduction party game">
 <meta name="twitter:description" content="A social deduction party game for 4 to 8 players on a single device.">
 <meta name="twitter:image" content="https://ravagithb.github.io/doomnut/support_assets/og_image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,6 @@
     --bg:#050508;
     --cyan:#80DEEA;
     --cyan-strong:#00E5FF;
-    --red:#FF1A1A;
     --red-virus:#FF1744;
     --teal:#003333;
     --purple:#7C4DFF;
@@ -102,9 +101,19 @@
   }
 
   /* ===== CONTENT ===== */
-  .container{position:relative;z-index:10;max-width:880px;margin:0 auto;padding:24px 24px 80px}
+  .container{
+    position:relative;
+    z-index:10;
+    max-width:880px;
+    margin:0 auto;
+    padding:24px 24px 40px;
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+  }
 
-  /* ===== LANG SWITCH (top-right floating, rules-cta look) ===== */
+  /* ===== LANG SWITCH ===== */
   .lang-switch{
     position:fixed;
     top:18px;right:18px;
@@ -142,12 +151,19 @@
     cursor:default;
   }
 
-  /* ===== TITLE ===== */
-  header{text-align:center;padding:20px 0 50px}
+  /* ===== HERO TITLE (bigger than support page) ===== */
+  header{
+    text-align:center;
+    padding:60px 0 40px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
   .title-wrap{
     position:relative;
     display:block;
-    width:min(720px,92vw);
+    width:min(820px,95vw);
     aspect-ratio:560/175;
     margin:0 auto;
   }
@@ -222,108 +238,22 @@
   }
 
   .tagline{
-    margin-top:20px;
+    margin-top:28px;
     color:var(--text-muted);
-    font-size:0.78rem;
-    letter-spacing:0.30em;
+    font-size:0.84rem;
+    letter-spacing:0.32em;
     text-transform:uppercase;
     font-weight:500;
   }
 
-  /* ===== SECTIONS ===== */
-  section{margin-bottom:54px}
-  h2{
-    font-family:'Montserrat',sans-serif;
-    font-weight:700;
-    font-size:1.25rem;
-    color:var(--cyan);
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    margin-bottom:24px;
-    text-align:center;
-    text-shadow:0 0 10px rgba(128,222,234,0.50);
-  }
-  p{margin-bottom:14px;font-size:1rem;font-weight:400;text-align:center}
-  p.left{text-align:left}
-  strong.cyan{color:var(--cyan);text-shadow:0 0 8px rgba(128,222,234,0.5);font-weight:600}
-
-  /* ===== ROLES ===== */
-  .roles{margin-top:8px}
-  .role{
-    display:flex;
-    align-items:center;
-    padding:16px 18px;
-    margin-bottom:12px;
-    background:rgba(0,0,0,0.40);
-    border:1px solid var(--border-faint);
-    border-radius:8px;
-    transition:all 0.25s;
-  }
-  .role:hover{
-    border-color:rgba(128,222,234,0.5);
-    box-shadow:0 0 18px rgba(128,222,234,0.18);
-  }
-  .role-icon{
-    width:56px;height:56px;flex-shrink:0;
-    margin-right:18px;
-    background-color:currentColor;
-    -webkit-mask-size:contain;mask-size:contain;
-    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-    -webkit-mask-position:center;mask-position:center;
-    filter:drop-shadow(0 0 8px currentColor);
-  }
-  .role-text{flex:1;min-width:0}
-  .role-name{
-    font-weight:700;
-    font-size:0.92rem;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    margin-bottom:5px;
-    text-shadow:0 0 8px currentColor;
-  }
-  .role-desc{
-    font-size:0.92rem;
-    color:rgba(255,255,255,0.85);
-    font-weight:400;
-    line-height:1.45;
-  }
-  .role-officer{color:var(--cyan-strong)}
-  .role-officer .role-icon{-webkit-mask-image:url('support_assets/iconofficier.png');mask-image:url('support_assets/iconofficier.png')}
-  .role-crew{color:var(--cream)}
-  .role-crew .role-icon{-webkit-mask-image:url('support_assets/iconequipage.png');mask-image:url('support_assets/iconequipage.png')}
-  .role-virus{color:var(--red-virus)}
-  .role-virus .role-icon{
-    background-color:var(--red-virus);
-    background-image:url('support_assets/iconvirus.webp');
-    background-size:contain;
-    background-repeat:no-repeat;
-    background-position:center;
-    background-blend-mode:multiply;
-    -webkit-mask-image:url('support_assets/iconvirus.png');
-    mask-image:url('support_assets/iconvirus.png');
-  }
-  .role-parasite{color:var(--purple)}
-  .role-parasite .role-icon{
-    width:64px;height:64px;
-    margin-right:18px;
-    -webkit-mask-image:url('support_assets/iconparasite4.png');
-    mask-image:url('support_assets/iconparasite4.png');
-  }
-  .optional-tag{
-    display:inline-block;margin-left:10px;
-    font-size:0.7rem;font-weight:600;
-    letter-spacing:0.20em;
-    color:rgba(255,255,255,0.55);
-    text-shadow:none;
-  }
-
-  /* ===== INSTALL CARDS (Get the App) ===== */
+  /* ===== INSTALL CARDS ===== */
+  .install-section{margin:50px 0 24px}
   .install-grid{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
     gap:28px;
     max-width:720px;
-    margin:0 auto 8px;
+    margin:0 auto;
   }
   .install-card{
     position:relative;
@@ -342,7 +272,6 @@
     transition:all 0.3s;
     overflow:hidden;
   }
-  /* Top neon accent line */
   .install-card::before{
     content:'';
     position:absolute;
@@ -353,7 +282,6 @@
     background:linear-gradient(90deg, transparent 0%, var(--cyan-strong) 50%, transparent 100%);
     box-shadow:0 0 12px var(--cyan-strong);
   }
-  /* Soft halo behind badge */
   .install-card::after{
     content:'';
     position:absolute;
@@ -408,167 +336,11 @@
     text-shadow:none;
     letter-spacing:0.30em;
   }
-  .install-section h2{margin-bottom:18px}
-
-  /* ===== RULES CTA ===== */
-  .rules-cta-wrap{text-align:center;margin-top:-18px;margin-bottom:54px}
-  .rules-cta{
-    display:inline-flex;align-items:center;gap:10px;
-    padding:14px 28px;
-    background:rgba(0,51,51,0.65);
-    border:2px solid var(--cyan);
-    border-radius:8px;
-    color:var(--cyan);
-    text-decoration:none;
-    font-weight:700;
-    font-size:0.92rem;
-    letter-spacing:0.20em;
-    text-transform:uppercase;
-    text-shadow:0 0 8px rgba(128,222,234,0.7);
-    box-shadow:0 0 18px rgba(128,222,234,0.25);
-    transition:all 0.25s;
-  }
-  .rules-cta:hover{
-    background:rgba(0,51,51,0.95);
-    box-shadow:0 0 32px rgba(128,222,234,0.55);
-    transform:translateY(-2px);
-  }
-  .rules-cta::after{
-    content:'';
-    display:inline-block;
-    width:20px;height:20px;
-    background-color:currentColor;
-    -webkit-mask-image:url('support_assets/fleche.png');
-    mask-image:url('support_assets/fleche.png');
-    -webkit-mask-size:contain;mask-size:contain;
-    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-    -webkit-mask-position:center;mask-position:center;
-    /* fleche.png points left (back arrow) — flip for forward CTA */
-    transform:scaleX(-1);
-    filter:drop-shadow(0 0 4px rgba(128,222,234,0.5));
-    transition:transform 0.25s;
-  }
-  .rules-cta:hover::after{transform:scaleX(-1) translateX(-4px)}
-
-  /* ===== CONTACT (CyberDialog style) ===== */
-  .contact-box{
-    background:rgba(5,5,8,0.95);
-    border:2px solid var(--cyan);
-    border-radius:8px;
-    padding:36px 28px;
-    text-align:center;
-    box-shadow:
-      0 0 20px rgba(128,222,234,0.20),
-      0 5px 50px rgba(128,222,234,0.10);
-  }
-  /* Marine astronaut avatar (mirrors widgets/marine_avatar.dart):
-     2 stacked layers — Layer 1 (suit) tinted cyan via BlendMode.modulate,
-     Layer 2 (gear) keeps original colors. */
-  .marine-avatar{
-    position:relative;
-    width:96px;height:96px;
-    margin:0 auto 18px;
-    image-rendering:pixelated;
-    filter:drop-shadow(0 0 14px rgba(128,222,234,0.45));
-  }
-  .marine-l1, .marine-l2{
-    position:absolute;inset:0;
-    background-size:contain;
-    background-repeat:no-repeat;
-    background-position:center;
-    image-rendering:pixelated;
-  }
-  .marine-l1{
-    background-color:var(--cyan);
-    background-image:url('support_assets/marinem_layer1.webp');
-    background-blend-mode:multiply;
-    -webkit-mask-image:url('support_assets/marinem_layer1.png');
-    mask-image:url('support_assets/marinem_layer1.png');
-    -webkit-mask-size:contain;mask-size:contain;
-    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-    -webkit-mask-position:center;mask-position:center;
-  }
-  .marine-l2{
-    background-image:url('support_assets/marinem_layer2.webp');
-  }
-  .contact-title{
-    color:var(--cyan);
-    font-size:1.05rem;font-weight:700;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    margin-bottom:18px;
-    text-shadow:0 0 10px rgba(128,222,234,0.6);
-  }
-  .email-btn{
-    display:inline-block;
-    padding:16px 32px;
-    background:rgba(0,51,51,0.80);
-    border:2px solid var(--cyan);
-    border-radius:8px;
-    color:var(--cyan);
-    text-decoration:none;
-    font-weight:700;
-    font-size:1.05rem;
-    letter-spacing:0.10em;
-    text-shadow:0 0 8px rgba(128,222,234,0.7);
-    box-shadow:0 0 18px rgba(128,222,234,0.30);
-    transition:all 0.25s;
-  }
-  .email-btn:hover{
-    background:rgba(0,51,51,0.95);
-    box-shadow:0 0 32px rgba(128,222,234,0.55);
-    transform:translateY(-2px);
-  }
-  .contact-hint{
-    margin-top:22px;
-    color:var(--text-muted);
-    font-size:0.85rem;
-    text-align:center;
-  }
-
-  /* ===== FAQ ===== */
-  .faq-item{
-    background:rgba(5,5,8,0.85);
-    border:1px solid var(--border-faint);
-    border-radius:8px;
-    padding:18px 22px;
-    margin-bottom:14px;
-    transition:all 0.25s;
-  }
-  .faq-item:hover{
-    border-color:rgba(128,222,234,0.5);
-    box-shadow:0 0 18px rgba(128,222,234,0.18);
-  }
-  .faq-q{
-    color:var(--cyan);
-    font-weight:600;
-    font-size:0.96rem;
-    letter-spacing:0.04em;
-    margin-bottom:8px;
-    text-shadow:0 0 6px rgba(128,222,234,0.4);
-  }
-  .faq-a{color:rgba(255,255,255,0.85);font-size:0.92rem;font-weight:400;line-height:1.6}
-  .faq-a a{color:var(--cyan);text-decoration:none;border-bottom:1px dotted var(--cyan)}
-  .faq-a ul{list-style:none;margin:4px 0 12px;padding:0}
-  .faq-a ul li{
-    position:relative;
-    padding:4px 0 4px 18px;
-    line-height:1.55;
-  }
-  .faq-a ul li::before{
-    content:'›';
-    position:absolute;left:2px;top:4px;
-    color:var(--cyan);
-    font-weight:700;
-    text-shadow:0 0 6px rgba(128,222,234,0.6);
-  }
-  .faq-a ul li strong{color:var(--cyan);font-weight:600;text-shadow:0 0 6px rgba(128,222,234,0.4)}
-  .faq-a p.summary{margin-top:6px;color:rgba(255,255,255,0.75);font-size:0.88rem;font-style:italic}
 
   /* ===== PAGE NAV ===== */
   .page-nav{
     display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
-    margin-top:56px;padding-top:32px;
+    margin-top:auto;padding-top:32px;
     border-top:1px solid var(--border-faint);
   }
   .nav-link{
@@ -591,14 +363,6 @@
     box-shadow:0 0 24px rgba(128,222,234,0.50);
     transform:translateY(-2px);
   }
-  .nav-link.active{
-    background:var(--cyan);
-    color:#000;
-    text-shadow:none;
-    box-shadow:0 0 18px rgba(128,222,234,0.55);
-    cursor:default;
-    pointer-events:none;
-  }
 
   /* ===== FOOTER ===== */
   footer{
@@ -614,14 +378,9 @@
     .install-badge{width:170px}
   }
   @media (max-width:480px){
-    .container{padding:16px 16px 60px}
-    h2{font-size:1.05rem;letter-spacing:0.14em}
-    .role{padding:14px}
-    .role-icon{width:46px;height:46px;margin-right:14px}
-    .role-parasite .role-icon{width:52px;height:52px;margin-right:14px}
-    .contact-box{padding:28px 18px}
-    .marine-avatar{width:80px;height:80px}
-    .email-btn{font-size:0.98rem;padding:14px 22px;letter-spacing:0.06em}
+    .container{padding:16px 16px 40px}
+    header{padding:40px 0 30px}
+    .tagline{font-size:0.72rem;letter-spacing:0.22em}
     .lang-switch{top:12px;right:12px}
     .lang-btn{padding:6px 11px;font-size:0.68rem}
   }
@@ -629,12 +388,12 @@
 </head>
 <body>
 
-<div class="space">
+<div class="space" aria-hidden="true">
   <div class="stars s1"></div>
   <div class="stars s2"></div>
   <div class="stars s3"></div>
 </div>
-<div class="scanlines"></div>
+<div class="scanlines" aria-hidden="true"></div>
 
 <div class="lang-switch" role="group" aria-label="Language">
   <button class="lang-btn" data-lang="en" type="button">EN</button>
@@ -644,7 +403,7 @@
 <div class="container">
 
   <header>
-    <div class="title-wrap">
+    <div class="title-wrap" aria-label="DOOMNUT" role="img">
       <div class="title-halo"></div>
       <div class="title-base"></div>
       <div class="title-shimmer"></div>
@@ -653,11 +412,10 @@
       <div class="title-glitch g-purple"></div>
       <div class="title-glitch g-cream"></div>
     </div>
-    <div class="tagline" data-i18n="tagline">Mission Support</div>
+    <div class="tagline" data-i18n="tagline">Social Deduction · 4 to 8 Players</div>
   </header>
 
   <section class="install-section">
-    <h2 data-i18n="getTitle">Play DOOMNUT now</h2>
     <div class="install-grid">
       <a class="install-card"
          href="https://play.google.com/store/apps/details?id=com.doomnut.app"
@@ -666,105 +424,19 @@
         <img class="install-badge"
              src="support_assets/google_play_badge.svg"
              alt="Get it on Google Play">
-        <div class="install-status" data-i18n="availableNow">AVAILABLE NOW</div>
+        <div class="install-status" data-i18n="availableNow">Available now</div>
       </a>
       <div class="install-card disabled" aria-disabled="true">
         <img class="install-badge"
              src="support_assets/app_store_badge.svg"
              alt="Download on the App Store">
-        <div class="install-status" data-i18n="comingSoon">COMING SOON</div>
+        <div class="install-status" data-i18n="comingSoon">Coming soon</div>
       </div>
-    </div>
-  </section>
-
-  <section>
-    <h2 data-i18n="aboutTitle">About the Mission</h2>
-    <p data-i18n-html="aboutP1">Doomnut is a social deduction party game for <strong class="cyan">4 to 8 players</strong>, designed to play together on a single device.</p>
-    <p data-i18n="aboutP2">One Officer holds a secret word. The Crew tries to guess it through yes/no questions. But hidden among them, a Virus and a Parasite are pulling the mission in their own direction.</p>
-  </section>
-
-  <div class="rules-cta-wrap">
-    <a class="rules-cta" href="rules.html" data-i18n="rulesCta">Read the Game Rules</a>
-  </div>
-
-  <section>
-    <h2 data-i18n="crewTitle">The Crew</h2>
-    <div class="roles">
-      <div class="role role-officer">
-        <div class="role-icon"></div>
-        <div class="role-text">
-          <div class="role-name" data-i18n="roleOfficer">Officer</div>
-          <div class="role-desc" data-i18n="roleOfficerDesc">Knows the secret word and sets the wager. Answers only YES or NO.</div>
-        </div>
-      </div>
-      <div class="role role-crew">
-        <div class="role-icon"></div>
-        <div class="role-text">
-          <div class="role-name" data-i18n="roleCrew">Crew</div>
-          <div class="role-desc" data-i18n="roleCrewDesc">Hunts the secret word with sharp, well-placed questions.</div>
-        </div>
-      </div>
-      <div class="role role-virus">
-        <div class="role-icon"></div>
-        <div class="role-text">
-          <div class="role-name" data-i18n="roleVirus">Virus</div>
-          <div class="role-desc" data-i18n="roleVirusDesc">Knows the word too, but plays from the shadows to mislead the Crew.</div>
-        </div>
-      </div>
-      <div class="role role-parasite">
-        <div class="role-icon"></div>
-        <div class="role-text">
-          <div class="role-name" data-i18n-html="roleParasite">Parasite<span class="optional-tag" data-i18n="optionalTag">OPTIONAL</span></div>
-          <div class="role-desc" data-i18n="roleParasiteDesc">Got a different word. Wants their word guessed instead of the Officer's.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2 data-i18n="contactTitle">Direct Channel</h2>
-    <div class="contact-box">
-      <div class="marine-avatar" aria-hidden="true">
-        <div class="marine-l1"></div>
-        <div class="marine-l2"></div>
-      </div>
-      <div class="contact-title" data-i18n="reachCrew">Reach the Crew</div>
-      <a class="email-btn" href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>
-      <div class="contact-hint" data-i18n="contactHint">Bug? Question? Idea? Drop us a line — every message is read.</div>
-    </div>
-    <p class="left" style="margin-top:18px;color:var(--text-muted);font-size:0.88rem" data-i18n-html="bugReportHint">When reporting a bug, please include your <strong class="cyan">device model</strong>, your <strong class="cyan">OS version</strong> (Android or iOS), and a short description of what happened. Screenshots are very welcome.</p>
-  </section>
-
-  <section>
-    <h2 data-i18n="faqTitle">Field Manual</h2>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q1">How many players are needed?</div>
-      <div class="faq-a" data-i18n="a1">Doomnut is designed for 4 to 8 players, all on a single device.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q2">Do I need an internet connection?</div>
-      <div class="faq-a" data-i18n="a2">No. The whole game runs offline. Internet is only used for optional features like ads and in-app purchases.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q3">What languages are available?</div>
-      <div class="faq-a" data-i18n="a3">English and French. The app follows your device language by default and can be changed in Settings.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q4">How do my progress and unlocked words work?</div>
-      <div class="faq-a" data-i18n-html="a4"></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q5">I lost my purchase after reinstalling. What do I do?</div>
-      <div class="faq-a" data-i18n="a5">Open the in-app shop and tap "Restore purchases". If the issue persists, email us at the address above with your transaction ID.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q6">How do I report a bug or suggest a feature?</div>
-      <div class="faq-a" data-i18n-html="a6">Email <a href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>. Every message is read by a real human.</div>
     </div>
   </section>
 
   <nav class="page-nav">
-    <a class="nav-link active" href="support.html" data-i18n="navSupport">Support</a>
+    <a class="nav-link" href="support.html" data-i18n="navSupport">Support</a>
     <a class="nav-link" href="rules.html" data-i18n="navRules">Rules</a>
     <a class="nav-link" href="privacy.html" data-i18n="navPrivacy">Privacy</a>
   </nav>
@@ -778,87 +450,23 @@
 <script>
   const I18N = {
     en: {
-      tagline: "Mission Support",
-      aboutTitle: "About the Mission",
-      aboutP1: 'Doomnut is a social deduction party game for <strong class="cyan">4 to 8 players</strong>, designed to play together on a single device.',
-      aboutP2: "One Officer holds a secret word. The Crew tries to guess it through yes/no questions. But hidden among them, a Virus and a Parasite are pulling the mission in their own direction.",
-      getTitle: "Play DOOMNUT now",
+      tagline: "Social Deduction · 4 to 8 Players",
       availableNow: "Available now",
       comingSoon: "Coming soon",
-      rulesCta: "Read the Game Rules",
-      crewTitle: "The Crew",
-      roleOfficer: "Officer",
-      roleOfficerDesc: "Knows the secret word and sets the wager. Answers only YES or NO.",
-      roleCrew: "Crew",
-      roleCrewDesc: "Hunts the secret word with sharp, well-placed questions.",
-      roleVirus: "Virus",
-      roleVirusDesc: "Knows the word too, but plays from the shadows to mislead the Crew.",
-      roleParasite: 'Parasite<span class="optional-tag">OPTIONAL</span>',
-      optionalTag: "OPTIONAL",
-      roleParasiteDesc: "Got a different word. Wants their word guessed instead of the Officer's.",
-      contactTitle: "Direct Channel",
-      reachCrew: "Reach the Crew",
-      contactHint: "Bug? Question? Idea? Drop us a line — every message is read.",
-      bugReportHint: 'When reporting a bug, please include your <strong class="cyan">device model</strong>, your <strong class="cyan">OS version</strong> (Android or iOS), and a short description of what happened. Screenshots are very welcome.',
-      faqTitle: "Field Manual",
-      q1: "How many players are needed?",
-      a1: "Doomnut is designed for 4 to 8 players, all on a single device.",
-      q2: "Do I need an internet connection?",
-      a2: "No. The whole game runs offline. Internet is only used for optional features like ads and in-app purchases.",
-      q3: "What languages are available?",
-      a3: "English and French. The app follows your device language by default and can be changed in Settings.",
-      q4: "How do my progress and unlocked words work?",
-      a4: '<ul><li><strong>Scores</strong> &rarr; reset automatically at the end of each game (no manual action needed).</li><li><strong>Word cycle</strong> (the order in which words appear, always randomized) &rarr; resets on its own when exhausted, and the order is reshuffled every time.</li><li><strong>Unlocked words</strong> (purchases) &rarr; tied to your App Store / Google Play account, restorable via "Restore purchases" in the shop.</li><li><strong>Wipe everything</strong> &rarr; uninstall and reinstall the app (data is stored locally).</li></ul><p class="summary">Scores reset automatically at the end of each game. The word cycle is always random and gets reshuffled on its own when exhausted. Purchases are tied to your App Store / Google Play account and can be restored from the shop. To wipe everything, uninstall and reinstall the app.</p>',
-      q5: "I lost my purchase after reinstalling. What do I do?",
-      a5: 'Open the in-app shop and tap "Restore purchases". If the issue persists, email us at the address above with your transaction ID.',
-      q6: "How do I report a bug or suggest a feature?",
-      a6: 'Email <a href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>. Every message is read by a real human.',
       navSupport: "Support",
       navRules: "Rules",
       navPrivacy: "Privacy",
-      _title: "DOOMNUT — Mission Support",
+      _title: "DOOMNUT — A social deduction party game",
       _htmlLang: "en",
     },
     fr: {
-      tagline: "Support Mission",
-      aboutTitle: "À propos de la mission",
-      aboutP1: 'Doomnut est un jeu de société de déduction sociale pour <strong class="cyan">4 à 8 joueurs</strong>, conçu pour jouer ensemble sur un seul appareil.',
-      aboutP2: "Un Officier détient un mot secret. L'Équipage tente de le deviner via des questions oui/non. Mais cachés parmi eux, un Virus et un Parasite tirent la mission dans leur propre direction.",
-      getTitle: "Jouez à DOOMNUT maintenant",
+      tagline: "Déduction Sociale · 4 à 8 Joueurs",
       availableNow: "Disponible maintenant",
       comingSoon: "Bientôt disponible",
-      rulesCta: "Lire les règles du jeu",
-      crewTitle: "L'Équipage",
-      roleOfficer: "Officier",
-      roleOfficerDesc: "Connaît le mot secret et choisit la mise. Ne répond que par OUI ou NON.",
-      roleCrew: "Équipage",
-      roleCrewDesc: "Traque le mot secret avec des questions précises et bien placées.",
-      roleVirus: "Virus",
-      roleVirusDesc: "Connaît le mot lui aussi, mais joue dans l'ombre pour égarer l'Équipage.",
-      roleParasite: 'Parasite<span class="optional-tag">OPTIONNEL</span>',
-      optionalTag: "OPTIONNEL",
-      roleParasiteDesc: "A reçu un mot différent. Veut que son mot soit deviné à la place de celui de l'Officier.",
-      contactTitle: "Canal direct",
-      reachCrew: "Contacter l'équipage",
-      contactHint: "Bug ? Question ? Idée ? Écrivez-nous — chaque message est lu.",
-      bugReportHint: 'Pour signaler un bug, merci d\'indiquer votre <strong class="cyan">modèle d\'appareil</strong>, votre <strong class="cyan">version d\'OS</strong> (Android ou iOS) et une courte description du problème. Les captures d\'écran sont les bienvenues.',
-      faqTitle: "Manuel de terrain",
-      q1: "Combien de joueurs faut-il ?",
-      a1: "Doomnut est conçu pour 4 à 8 joueurs, tous sur un seul appareil.",
-      q2: "Faut-il une connexion internet ?",
-      a2: "Non. Le jeu fonctionne entièrement hors-ligne. Internet n'est utilisé que pour des fonctions optionnelles comme la publicité et les achats intégrés.",
-      q3: "Quelles langues sont disponibles ?",
-      a3: "Anglais et français. L'application suit la langue de votre appareil par défaut et peut être changée dans les Paramètres.",
-      q4: "Comment fonctionnent ma progression et mes mots débloqués ?",
-      a4: '<ul><li><strong>Scores</strong> &rarr; se réinitialisent automatiquement en fin de partie (pas d\'action manuelle nécessaire).</li><li><strong>Cycle de mots</strong> (ordre dans lequel les mots apparaissent, toujours aléatoire) &rarr; se réinitialise tout seul quand il est épuisé, et l\'ordre est re-mélangé à chaque fois.</li><li><strong>Mots débloqués</strong> (achats) &rarr; liés au compte App Store / Google Play, restaurables via « Restaurer les achats » dans la boutique.</li><li><strong>Tout effacer</strong> &rarr; désinstaller puis réinstaller l\'application (les données sont stockées localement).</li></ul><p class="summary">Les scores se réinitialisent automatiquement en fin de partie. Le cycle de mots est toujours aléatoire et est re-mélangé tout seul quand il est épuisé. Les achats sont liés à votre compte (App Store / Google Play) et peuvent être restaurés depuis la boutique. Pour tout effacer, désinstallez puis réinstallez l\'application.</p>',
-      q5: "J'ai perdu mon achat après réinstallation. Que faire ?",
-      a5: 'Ouvrez la boutique dans l\'application et touchez « Restaurer les achats ». Si le problème persiste, envoyez-nous un email avec votre identifiant de transaction.',
-      q6: "Comment signaler un bug ou suggérer une fonctionnalité ?",
-      a6: 'Écrivez à <a href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>. Chaque message est lu par un humain.',
       navSupport: "Support",
       navRules: "Règles",
       navPrivacy: "Confidentialité",
-      _title: "DOOMNUT — Support Mission",
+      _title: "DOOMNUT — Un jeu de déduction sociale",
       _htmlLang: "fr",
     },
   };
@@ -868,10 +476,6 @@
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const k = el.getAttribute('data-i18n');
       if (dict[k] !== undefined) el.textContent = dict[k];
-    });
-    document.querySelectorAll('[data-i18n-html]').forEach(el => {
-      const k = el.getAttribute('data-i18n-html');
-      if (dict[k] !== undefined) el.innerHTML = dict[k];
     });
     if (dict._title) document.title = dict._title;
     if (dict._htmlLang) document.documentElement.setAttribute('lang', dict._htmlLang);
