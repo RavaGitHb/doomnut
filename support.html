@@ -539,29 +539,76 @@
     text-align:center;
   }
 
-  /* ===== FAQ ===== */
+  /* ===== FAQ (accordion via details/summary) ===== */
   .faq-item{
     background:rgba(5,5,8,0.85);
     border:1px solid var(--border-faint);
     border-radius:8px;
-    padding:18px 22px;
-    margin-bottom:14px;
-    transition:all 0.25s;
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color 0.25s, box-shadow 0.25s, background 0.25s;
   }
   .faq-item:hover{
-    border-color:rgba(128,222,234,0.5);
-    box-shadow:0 0 18px rgba(128,222,234,0.18);
+    border-color:rgba(128,222,234,0.4);
+    box-shadow:0 0 16px rgba(128,222,234,0.15);
+  }
+  .faq-item[open]{
+    border-color:rgba(128,222,234,0.55);
+    background:rgba(5,8,12,0.95);
+    box-shadow:0 0 22px rgba(128,222,234,0.22);
   }
   .faq-q{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:16px 20px;
+    cursor:pointer;
+    list-style:none;
     color:var(--cyan);
     font-weight:600;
     font-size:0.96rem;
     letter-spacing:0.04em;
-    margin-bottom:8px;
     text-shadow:0 0 6px rgba(128,222,234,0.4);
+    user-select:none;
+    transition:color 0.2s;
   }
-  .faq-a{color:rgba(255,255,255,0.85);font-size:0.92rem;font-weight:400;line-height:1.6}
+  .faq-q::-webkit-details-marker{display:none}
+  .faq-q::after{
+    content:'+';
+    flex-shrink:0;
+    width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.30rem;
+    font-weight:300;
+    color:var(--cyan);
+    border:1px solid rgba(128,222,234,0.35);
+    border-radius:50%;
+    transition:transform 0.25s, border-color 0.25s, background 0.25s;
+  }
+  .faq-q:hover::after{
+    border-color:var(--cyan);
+    background:rgba(128,222,234,0.10);
+  }
+  .faq-item[open] .faq-q::after{
+    content:'−';
+    transform:rotate(180deg);
+    border-color:var(--cyan);
+    background:rgba(128,222,234,0.12);
+  }
+  .faq-a{
+    padding:0 20px 18px;
+    color:rgba(255,255,255,0.85);
+    font-size:0.92rem;
+    font-weight:400;
+    line-height:1.6;
+    animation:faqOpen 0.3s ease-out;
+  }
   .faq-a a{color:var(--cyan);text-decoration:none;border-bottom:1px dotted var(--cyan)}
+  @keyframes faqOpen{
+    from{opacity:0;transform:translateY(-4px)}
+    to{opacity:1;transform:translateY(0)}
+  }
   .faq-a ul{list-style:none;margin:4px 0 12px;padding:0}
   .faq-a ul li{
     position:relative;
@@ -797,30 +844,30 @@
 
   <section>
     <h2 data-i18n="faqTitle">Field Manual</h2>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q1">How many players are needed?</div>
+    <details class="faq-item">
+      <summary class="faq-q" data-i18n="q1">How many players are needed?</summary>
       <div class="faq-a" data-i18n="a1">Doomnut is designed for 4 to 8 players, all on a single device.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q2">Do I need an internet connection?</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q" data-i18n="q2">Do I need an internet connection?</summary>
       <div class="faq-a" data-i18n="a2">No. The whole game runs offline. Internet is only used for optional features like ads and in-app purchases.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q3">What languages are available?</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q" data-i18n="q3">What languages are available?</summary>
       <div class="faq-a" data-i18n="a3">English and French. The app follows your device language by default and can be changed in Settings.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q4">How do my progress and unlocked words work?</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q" data-i18n="q4">How do my progress and unlocked words work?</summary>
       <div class="faq-a" data-i18n-html="a4"></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q5">I lost my purchase after reinstalling. What do I do?</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q" data-i18n="q5">I lost my purchase after reinstalling. What do I do?</summary>
       <div class="faq-a" data-i18n="a5">Open the in-app shop and tap "Restore purchases". If the issue persists, email us at the address above with your transaction ID.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" data-i18n="q6">How do I report a bug or suggest a feature?</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q" data-i18n="q6">How do I report a bug or suggest a feature?</summary>
       <div class="faq-a" data-i18n-html="a6">Email <a href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>. Every message is read by a real human.</div>
-    </div>
+    </details>
   </section>
 
   <nav class="page-nav">
