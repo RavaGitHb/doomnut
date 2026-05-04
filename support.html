@@ -303,8 +303,8 @@
   .install-grid{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
-    gap:14px;
-    max-width:680px;
+    gap:28px;
+    max-width:720px;
     margin:0 auto 8px;
   }
   .install-card{
@@ -364,8 +364,9 @@
   .install-card.disabled::after{display:none}
   .install-badge{
     display:block;
-    height:54px;
-    width:auto;
+    width:180px;
+    height:auto;
+    aspect-ratio:3.375 / 1;
     filter:drop-shadow(0 0 12px rgba(128,222,234,0.50));
     transition:filter 0.3s;
   }
@@ -590,9 +591,9 @@
   }
 
   @media (max-width:540px){
-    .install-grid{grid-template-columns:1fr; max-width:340px}
+    .install-grid{grid-template-columns:1fr; gap:18px; max-width:340px}
     .install-card{padding:22px 18px}
-    .install-badge{height:48px}
+    .install-badge{width:170px}
   }
   @media (max-width:480px){
     .container{padding:16px 16px 60px}
@@ -651,13 +652,13 @@
          target="_blank" rel="noopener"
          aria-label="Get DOOMNUT on Google Play">
         <img class="install-badge"
-             src="support_assets/google_play_badge.png"
+             src="support_assets/google_play_badge.svg"
              alt="Get it on Google Play">
         <div class="install-status" data-i18n="availableNow">AVAILABLE NOW</div>
       </a>
       <div class="install-card disabled" aria-disabled="true">
         <img class="install-badge"
-             src="support_assets/app_store_badge.png"
+             src="support_assets/app_store_badge.svg"
              alt="Download on the App Store">
         <div class="install-status" data-i18n="comingSoon">COMING SOON</div>
       </div>
