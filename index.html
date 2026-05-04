@@ -46,7 +46,8 @@
     color:var(--text);
     font-family:'Montserrat',sans-serif;
     line-height:1.5;
-    overflow-x:hidden;
+    overflow-x:hidden;     /* fallback for old browsers */
+    overflow-x:clip;       /* modern: clips without breaking position:fixed on iOS */
   }
 
   /* ===== STARFIELD ===== */
@@ -380,7 +381,7 @@
       max-width:none;
       margin-left:calc(50% - 50vw);
       margin-right:calc(50% - 50vw);
-      transform:scale(1.18);
+      transform:scale(1.40);
       transform-origin:center center;
     }
     .tagline{margin-top:18px;font-size:0.62rem;letter-spacing:0.20em}
@@ -395,9 +396,6 @@
       top:8px;right:8px;
       flex-direction:column;
       gap:4px;
-      will-change:transform;
-      -webkit-transform:translateZ(0);
-      transform:translateZ(0);
     }
     .lang-btn{
       padding:6px 10px;
