@@ -438,6 +438,21 @@
   }
   .faq-a{color:rgba(255,255,255,0.85);font-size:0.92rem;font-weight:400;line-height:1.6}
   .faq-a a{color:var(--cyan);text-decoration:none;border-bottom:1px dotted var(--cyan)}
+  .faq-a ul{list-style:none;margin:4px 0 12px;padding:0}
+  .faq-a ul li{
+    position:relative;
+    padding:4px 0 4px 18px;
+    line-height:1.55;
+  }
+  .faq-a ul li::before{
+    content:'›';
+    position:absolute;left:2px;top:4px;
+    color:var(--cyan);
+    font-weight:700;
+    text-shadow:0 0 6px rgba(128,222,234,0.6);
+  }
+  .faq-a ul li strong{color:var(--cyan);font-weight:600;text-shadow:0 0 6px rgba(128,222,234,0.4)}
+  .faq-a p.summary{margin-top:6px;color:rgba(255,255,255,0.75);font-size:0.88rem;font-style:italic}
 
   /* ===== PAGE NAV ===== */
   .page-nav{
@@ -598,8 +613,8 @@
       <div class="faq-a" data-i18n="a3">English and French. The app follows your device language by default and can be changed in Settings.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" data-i18n="q4">How do I reset my progress or unlocked words?</div>
-      <div class="faq-a" data-i18n="a4">Open Settings inside the app. All data is stored locally on your device.</div>
+      <div class="faq-q" data-i18n="q4">How do my progress and unlocked words work?</div>
+      <div class="faq-a" data-i18n-html="a4"></div>
     </div>
     <div class="faq-item">
       <div class="faq-q" data-i18n="q5">I lost my purchase after reinstalling. What do I do?</div>
@@ -652,8 +667,8 @@
       a2: "No. The whole game runs offline. Internet is only used for optional features like ads and in-app purchases.",
       q3: "What languages are available?",
       a3: "English and French. The app follows your device language by default and can be changed in Settings.",
-      q4: "How do I reset my progress or unlocked words?",
-      a4: "Open Settings inside the app. All data is stored locally on your device.",
+      q4: "How do my progress and unlocked words work?",
+      a4: '<ul><li><strong>Scores</strong> &rarr; reset automatically at the end of each game (no manual action needed).</li><li><strong>Word cycle</strong> (the order in which words appear) &rarr; resets on its own when exhausted.</li><li><strong>Unlocked words</strong> (purchases) &rarr; tied to your App Store / Google Play account, restorable via "Restore purchases" in the shop.</li><li><strong>Wipe everything</strong> &rarr; uninstall and reinstall the app (data is stored locally).</li></ul><p class="summary">Scores reset automatically at the end of each game. The word cycle rotates and resets on its own when exhausted. Purchases are tied to your App Store / Google Play account and can be restored from the shop. To wipe everything, uninstall and reinstall the app.</p>',
       q5: "I lost my purchase after reinstalling. What do I do?",
       a5: 'Open the in-app shop and tap "Restore purchases". If the issue persists, email us at the address above with your transaction ID.',
       q6: "How do I report a bug or suggest a feature?",
@@ -691,8 +706,8 @@
       a2: "Non. Le jeu fonctionne entièrement hors-ligne. Internet n'est utilisé que pour des fonctions optionnelles comme la publicité et les achats intégrés.",
       q3: "Quelles langues sont disponibles ?",
       a3: "Anglais et français. L'application suit la langue de votre appareil par défaut et peut être changée dans les Paramètres.",
-      q4: "Comment réinitialiser ma progression ou mes mots débloqués ?",
-      a4: "Ouvrez les Paramètres dans l'application. Toutes les données sont stockées localement sur votre appareil.",
+      q4: "Comment fonctionnent ma progression et mes mots débloqués ?",
+      a4: '<ul><li><strong>Scores</strong> &rarr; se réinitialisent automatiquement en fin de partie (pas d\'action manuelle nécessaire).</li><li><strong>Cycle de mots</strong> (ordre dans lequel les mots apparaissent) &rarr; se réinitialise tout seul quand il est épuisé.</li><li><strong>Mots débloqués</strong> (achats) &rarr; liés au compte App Store / Google Play, restaurables via « Restaurer les achats » dans la boutique.</li><li><strong>Tout effacer</strong> &rarr; désinstaller puis réinstaller l\'application (les données sont stockées localement).</li></ul><p class="summary">Les scores se réinitialisent automatiquement en fin de partie. Le cycle de mots tourne et se réinitialise tout seul quand il est épuisé. Les achats sont liés à votre compte (App Store / Google Play) et peuvent être restaurés depuis la boutique. Pour tout effacer, désinstallez puis réinstallez l\'application.</p>',
       q5: "J'ai perdu mon achat après réinstallation. Que faire ?",
       a5: 'Ouvrez la boutique dans l\'application et touchez « Restaurer les achats ». Si le problème persiste, envoyez-nous un email avec votre identifiant de transaction.',
       q6: "Comment signaler un bug ou suggérer une fonctionnalité ?",
