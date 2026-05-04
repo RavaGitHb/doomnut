@@ -299,6 +299,98 @@
     text-shadow:none;
   }
 
+  /* ===== INSTALL CARDS (Get the App) ===== */
+  .install-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+    max-width:680px;
+    margin:0 auto 8px;
+  }
+  .install-card{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    padding:26px 20px;
+    background:linear-gradient(180deg, rgba(0,80,90,0.55) 0%, rgba(0,15,25,0.90) 100%);
+    border:2px solid var(--cyan);
+    border-radius:10px;
+    text-decoration:none;
+    text-align:center;
+    box-shadow:0 0 22px rgba(128,222,234,0.25), inset 0 1px 0 rgba(128,222,234,0.55);
+    transition:all 0.3s;
+    overflow:hidden;
+  }
+  /* Top neon accent line */
+  .install-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:50%;
+    width:65%;
+    height:2px;
+    transform:translateX(-50%);
+    background:linear-gradient(90deg, transparent 0%, var(--cyan-strong) 50%, transparent 100%);
+    box-shadow:0 0 12px var(--cyan-strong);
+  }
+  /* Soft halo behind badge */
+  .install-card::after{
+    content:'';
+    position:absolute;
+    top:55%;left:50%;
+    width:80%;height:80%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(ellipse at center, rgba(128,222,234,0.18) 0%, transparent 65%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .install-card > *{position:relative;z-index:1}
+  .install-card:hover{
+    background:linear-gradient(180deg, rgba(0,110,120,0.75) 0%, rgba(0,30,40,0.95) 100%);
+    box-shadow:0 0 36px rgba(128,222,234,0.55), inset 0 1px 0 rgba(128,222,234,0.9);
+    transform:translateY(-4px);
+  }
+  .install-card.disabled{
+    cursor:not-allowed;
+    opacity:0.62;
+    pointer-events:none;
+  }
+  .install-card.disabled::before{
+    background:linear-gradient(90deg, transparent 0%, rgba(128,222,234,0.30) 50%, transparent 100%);
+    box-shadow:none;
+  }
+  .install-card.disabled::after{display:none}
+  .install-badge{
+    display:block;
+    height:54px;
+    width:auto;
+    filter:drop-shadow(0 0 12px rgba(128,222,234,0.50));
+    transition:filter 0.3s;
+  }
+  .install-card:hover .install-badge{
+    filter:drop-shadow(0 0 22px rgba(128,222,234,0.80));
+  }
+  .install-card.disabled .install-badge{
+    filter:grayscale(0.85) brightness(0.75) drop-shadow(0 0 6px rgba(128,222,234,0.20));
+  }
+  .install-status{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:0.72rem;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    text-shadow:0 0 8px rgba(128,222,234,0.65);
+  }
+  .install-card.disabled .install-status{
+    color:var(--text-muted);
+    text-shadow:none;
+    letter-spacing:0.30em;
+  }
+  .install-section h2{margin-bottom:18px}
+
   /* ===== RULES CTA ===== */
   .rules-cta-wrap{text-align:center;margin-top:-18px;margin-bottom:54px}
   .rules-cta{
@@ -497,6 +589,11 @@
     font-size:0.72rem;letter-spacing:0.15em;font-weight:500;
   }
 
+  @media (max-width:540px){
+    .install-grid{grid-template-columns:1fr; max-width:340px}
+    .install-card{padding:22px 18px}
+    .install-badge{height:48px}
+  }
   @media (max-width:480px){
     .container{padding:16px 16px 60px}
     h2{font-size:1.05rem;letter-spacing:0.14em}
@@ -507,7 +604,7 @@
     .marine-avatar{width:80px;height:80px}
     .email-btn{font-size:0.98rem;padding:14px 22px;letter-spacing:0.06em}
     .lang-switch{top:12px;right:12px}
-    .lang-btn{padding:5px 11px;font-size:0.66rem}
+    .lang-btn{padding:6px 11px;font-size:0.68rem}
   }
 </style>
 </head>
@@ -544,6 +641,27 @@
     <h2 data-i18n="aboutTitle">About the Mission</h2>
     <p data-i18n-html="aboutP1">Doomnut is a social deduction party game for <strong class="cyan">4 to 8 players</strong>, designed to play together on a single device.</p>
     <p data-i18n="aboutP2">One Officer holds a secret word. The Crew tries to guess it through yes/no questions. But hidden among them, a Virus and a Parasite are pulling the mission in their own direction.</p>
+  </section>
+
+  <section class="install-section">
+    <h2 data-i18n="getTitle">Get the App</h2>
+    <div class="install-grid">
+      <a class="install-card"
+         href="https://play.google.com/store/apps/details?id=com.doomnut.app"
+         target="_blank" rel="noopener"
+         aria-label="Get DOOMNUT on Google Play">
+        <img class="install-badge"
+             src="support_assets/google_play_badge.png"
+             alt="Get it on Google Play">
+        <div class="install-status" data-i18n="availableNow">AVAILABLE NOW</div>
+      </a>
+      <div class="install-card disabled" aria-disabled="true">
+        <img class="install-badge"
+             src="support_assets/app_store_badge.png"
+             alt="Download on the App Store">
+        <div class="install-status" data-i18n="comingSoon">COMING SOON</div>
+      </div>
+    </div>
   </section>
 
   <div class="rules-cta-wrap">
@@ -645,6 +763,9 @@
       aboutTitle: "About the Mission",
       aboutP1: 'Doomnut is a social deduction party game for <strong class="cyan">4 to 8 players</strong>, designed to play together on a single device.',
       aboutP2: "One Officer holds a secret word. The Crew tries to guess it through yes/no questions. But hidden among them, a Virus and a Parasite are pulling the mission in their own direction.",
+      getTitle: "Get the App",
+      availableNow: "Available now",
+      comingSoon: "Coming soon",
       rulesCta: "Read the Game Rules",
       crewTitle: "The Crew",
       roleOfficer: "Officer",
@@ -684,6 +805,9 @@
       aboutTitle: "À propos de la mission",
       aboutP1: 'Doomnut est un jeu de société de déduction sociale pour <strong class="cyan">4 à 8 joueurs</strong>, conçu pour jouer ensemble sur un seul appareil.',
       aboutP2: "Un Officier détient un mot secret. L'Équipage tente de le deviner via des questions oui/non. Mais cachés parmi eux, un Virus et un Parasite tirent la mission dans leur propre direction.",
+      getTitle: "Télécharger l'application",
+      availableNow: "Disponible maintenant",
+      comingSoon: "Bientôt disponible",
       rulesCta: "Lire les règles du jeu",
       crewTitle: "L'Équipage",
       roleOfficer: "Officier",
