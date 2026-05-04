@@ -86,38 +86,41 @@
   /* ===== CONTENT ===== */
   .container{position:relative;z-index:10;max-width:880px;margin:0 auto;padding:24px 24px 80px}
 
-  /* ===== LANG SWITCH (top-right floating) ===== */
+  /* ===== LANG SWITCH (top-right floating, rules-cta look) ===== */
   .lang-switch{
     position:fixed;
     top:18px;right:18px;
     z-index:20;
-    display:flex;gap:0;
-    background:rgba(5,5,8,0.85);
-    border:1px solid var(--cyan);
-    border-radius:999px;
-    overflow:hidden;
-    box-shadow:0 0 14px rgba(128,222,234,0.30);
-    backdrop-filter:blur(6px);
-    -webkit-backdrop-filter:blur(6px);
+    display:flex;gap:8px;
   }
   .lang-btn{
-    padding:6px 14px;
-    background:transparent;
-    border:0;
+    padding:8px 14px;
+    background:rgba(0,51,51,0.65);
+    border:2px solid var(--cyan);
+    border-radius:8px;
     color:var(--cyan);
     font-family:'Montserrat',sans-serif;
     font-weight:700;
-    font-size:0.72rem;
-    letter-spacing:0.18em;
+    font-size:0.74rem;
+    letter-spacing:0.20em;
     cursor:pointer;
-    text-shadow:0 0 6px rgba(128,222,234,0.45);
-    transition:all 0.2s;
+    text-transform:uppercase;
+    text-shadow:0 0 8px rgba(128,222,234,0.7);
+    box-shadow:0 0 14px rgba(128,222,234,0.25);
+    transition:all 0.25s;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
   }
-  .lang-btn:hover{background:rgba(128,222,234,0.12)}
+  .lang-btn:hover{
+    background:rgba(0,51,51,0.95);
+    box-shadow:0 0 24px rgba(128,222,234,0.50);
+    transform:translateY(-1px);
+  }
   .lang-btn.active{
     background:var(--cyan);
     color:#000;
     text-shadow:none;
+    box-shadow:0 0 18px rgba(128,222,234,0.55);
     cursor:default;
   }
 
@@ -320,11 +323,21 @@
     transform:translateY(-2px);
   }
   .rules-cta::after{
-    content:'→';
-    font-size:1.1rem;
+    content:'';
+    display:inline-block;
+    width:20px;height:20px;
+    background-color:currentColor;
+    -webkit-mask-image:url('support_assets/fleche.png');
+    mask-image:url('support_assets/fleche.png');
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:center;mask-position:center;
+    /* fleche.png points left (back arrow) — flip for forward CTA */
+    transform:scaleX(-1);
+    filter:drop-shadow(0 0 4px rgba(128,222,234,0.5));
     transition:transform 0.25s;
   }
-  .rules-cta:hover::after{transform:translateX(4px)}
+  .rules-cta:hover::after{transform:scaleX(-1) translateX(-4px)}
 
   /* ===== CONTACT (CyberDialog style) ===== */
   .contact-box{
