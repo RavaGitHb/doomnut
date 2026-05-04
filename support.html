@@ -157,6 +157,14 @@
 
   /* ===== TITLE ===== */
   header{text-align:center;padding:20px 0 50px}
+  .title-link{
+    display:block;
+    text-decoration:none;
+    cursor:pointer;
+    transition:filter 0.3s;
+  }
+  .title-link:hover{filter:brightness(1.08)}
+  .title-link:active{filter:brightness(0.95)}
   .title-wrap{
     position:relative;
     display:block;
@@ -867,15 +875,17 @@
 <div class="container">
 
   <header>
-    <div class="title-wrap">
-      <div class="title-halo"></div>
-      <div class="title-base"></div>
-      <div class="title-shimmer"></div>
-      <div class="title-glow"></div>
-      <div class="title-glitch g-red"></div>
-      <div class="title-glitch g-purple"></div>
-      <div class="title-glitch g-cream"></div>
-    </div>
+    <a class="title-link" href="index.html" aria-label="DOOMNUT — Home">
+      <div class="title-wrap" aria-hidden="true">
+        <div class="title-halo"></div>
+        <div class="title-base"></div>
+        <div class="title-shimmer"></div>
+        <div class="title-glow"></div>
+        <div class="title-glitch g-red"></div>
+        <div class="title-glitch g-purple"></div>
+        <div class="title-glitch g-cream"></div>
+      </div>
+    </a>
     <div class="tagline" data-i18n="tagline">Mission Support</div>
   </header>
 
