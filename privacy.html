@@ -104,6 +104,52 @@
   /* ===== CONTENT ===== */
   .container{position:relative;z-index:10;max-width:760px;margin:0 auto;padding:24px 24px 80px}
 
+  /* ===== LANG SWITCH (sticky-corner pattern) ===== */
+  .sticky-corner{
+    position:sticky;
+    top:0;
+    height:0;
+    z-index:999;
+    pointer-events:none;
+    overflow:visible;
+  }
+  .lang-switch{
+    position:absolute;
+    top:18px;right:18px;
+    pointer-events:auto;
+    display:flex;gap:8px;
+  }
+  .lang-btn{
+    padding:8px 14px;
+    background:rgba(0,51,51,0.65);
+    border:2px solid var(--cyan);
+    border-radius:8px;
+    color:var(--cyan);
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:0.74rem;
+    letter-spacing:0.20em;
+    cursor:pointer;
+    text-transform:uppercase;
+    text-shadow:0 0 8px rgba(128,222,234,0.7);
+    box-shadow:0 0 14px rgba(128,222,234,0.25);
+    transition:all 0.25s;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+  .lang-btn:hover{
+    background:rgba(0,51,51,0.95);
+    box-shadow:0 0 24px rgba(128,222,234,0.50);
+    transform:translateY(-1px);
+  }
+  .lang-btn.active{
+    background:var(--cyan);
+    color:#000;
+    text-shadow:none;
+    box-shadow:0 0 18px rgba(128,222,234,0.55);
+    cursor:default;
+  }
+
   /* ===== HEADER (mirrors CyberAppBar) ===== */
   .app-bar{
     padding:14px 4px 24px;
@@ -302,6 +348,22 @@
     .nav-link{padding:9px 14px;font-size:0.66rem;letter-spacing:0.14em}
     .page-nav{gap:8px;padding-top:24px;margin-top:36px}
     footer{font-size:0.62rem}
+    .lang-switch{
+      top:6px;right:6px;
+      flex-direction:column;
+      gap:3px;
+    }
+    .lang-btn{
+      padding:3px 7px;
+      font-size:0.48rem;
+      letter-spacing:0.08em;
+      min-width:32px;
+      border-width:1px;
+      background:rgba(0,30,40,0.50);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      box-shadow:0 0 8px rgba(128,222,234,0.18);
+    }
   }
   @media (max-width:380px){
     .container{padding:10px 8px 40px}
@@ -319,6 +381,13 @@
 </div>
 <div class="scanlines"></div>
 
+<div class="sticky-corner">
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="en" type="button">EN</button>
+    <button class="lang-btn" data-lang="fr" type="button">FR</button>
+  </div>
+</div>
+
 <div class="page-clip">
 <div class="container">
 
@@ -328,101 +397,213 @@
         <span class="back-arrow"></span>
       </a>
     </div>
-    <h1 class="page-title">Privacy Policy</h1>
-    <div class="effective-date">Effective April 2026</div>
+    <h1 class="page-title" data-i18n="pageTitle">Privacy Policy</h1>
+    <div class="effective-date" data-i18n="effectiveDate">Effective April 2026</div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>1. Introduction</h2></div>
+    <div class="section-title"><h2 data-i18n="s1Title">1. Introduction</h2></div>
     <div class="card">
-      <p>DOOMNUT is a social deduction party game developed by Pierre-Louis Cargnello. This Privacy Policy explains how information is collected, used, and shared when you use the DOOMNUT mobile application.</p>
+      <p data-i18n="s1Text">DOOMNUT is a social deduction party game developed by Pierre-Louis Cargnello. This Privacy Policy explains how information is collected, used, and shared when you use the DOOMNUT mobile application.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>2. Information We Collect</h2></div>
+    <div class="section-title"><h2 data-i18n="s2Title">2. Information We Collect</h2></div>
     <div class="card">
-      <p>DOOMNUT does <strong>not</strong> collect any personal information directly. The app does not require account creation, login, email address, or any form of registration.</p>
-      <p>All game data (player names, scores, settings, and game history) is stored <strong>locally on your device</strong> and is never transmitted to any server.</p>
+      <p data-i18n-html="s2Text1">DOOMNUT does <strong>not</strong> collect any personal information directly. The app does not require account creation, login, email address, or any form of registration.</p>
+      <p data-i18n-html="s2Text2">All game data (player names, scores, settings, and game history) is stored <strong>locally on your device</strong> and is never transmitted to any server.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>3. Third-Party Services</h2></div>
+    <div class="section-title"><h2 data-i18n="s3Title">3. Third-Party Services</h2></div>
     <div class="card">
-      <p>The app uses the following third-party services that may collect information:</p>
+      <p data-i18n="s3Intro">The app uses the following third-party services that may collect information:</p>
       <ul>
-        <li><strong>Google AdMob</strong> — Used to display advertisements. Google may collect device identifiers, IP address, and usage data to serve personalized or non-personalized ads. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
-        <li><strong>RevenueCat</strong> — Used to manage in-app purchases. RevenueCat may process transaction data through the Google Play Store or Apple App Store. See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.</li>
-        <li><strong>Firebase (Crashlytics &amp; Analytics)</strong> — Used to monitor app stability and understand usage patterns. Firebase may collect crash logs, device information, and anonymous usage data. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase's Privacy Policy</a>.</li>
-        <li><strong>Google Play Store / Apple App Store</strong> — Handles app distribution and in-app purchase transactions. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a> and <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</li>
+        <li data-i18n-html="s3Item1"><strong>Google AdMob</strong> — Used to display advertisements. Google may collect device identifiers, IP address, and usage data to serve personalized or non-personalized ads. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+        <li data-i18n-html="s3Item2"><strong>RevenueCat</strong> — Used to manage in-app purchases. RevenueCat may process transaction data through the Google Play Store or Apple App Store. See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.</li>
+        <li data-i18n-html="s3Item3"><strong>Firebase (Crashlytics &amp; Analytics)</strong> — Used to monitor app stability and understand usage patterns. Firebase may collect crash logs, device information, and anonymous usage data. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase's Privacy Policy</a>.</li>
+        <li data-i18n-html="s3Item4"><strong>Google Play Store / Apple App Store</strong> — Handles app distribution and in-app purchase transactions. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a> and <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</li>
       </ul>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>4. Advertising</h2></div>
+    <div class="section-title"><h2 data-i18n="s4Title">4. Advertising</h2></div>
     <div class="card">
-      <p>DOOMNUT displays ads through Google AdMob. You may see personalized ads based on your interests, or non-personalized ads depending on your device settings and consent choices. You can manage your ad preferences in your device's settings.</p>
+      <p data-i18n="s4Text">DOOMNUT displays ads through Google AdMob. You may see personalized ads based on your interests, or non-personalized ads depending on your device settings and consent choices. You can manage your ad preferences in your device's settings.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>5. In-App Purchases</h2></div>
+    <div class="section-title"><h2 data-i18n="s5Title">5. In-App Purchases</h2></div>
     <div class="card">
-      <p>DOOMNUT offers optional in-app purchases to unlock additional word packs. These transactions are processed entirely through the Google Play Store or Apple App Store. We do not have access to your payment information.</p>
+      <p data-i18n="s5Text">DOOMNUT offers optional in-app purchases to unlock additional word packs. These transactions are processed entirely through the Google Play Store or Apple App Store. We do not have access to your payment information.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>6. Children's Privacy</h2></div>
+    <div class="section-title"><h2 data-i18n="s6Title">6. Children's Privacy</h2></div>
     <div class="card">
-      <p>DOOMNUT is not directed at children under 13. We do not knowingly collect personal information from children. Since the app does not collect any personal data, no special provisions are required.</p>
+      <p data-i18n="s6Text">DOOMNUT is not directed at children under 13. We do not knowingly collect personal information from children. Since the app does not collect any personal data, no special provisions are required.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>7. Data Retention</h2></div>
+    <div class="section-title"><h2 data-i18n="s7Title">7. Data Retention</h2></div>
     <div class="card">
-      <p>Since all game data is stored locally on your device, you have full control over it. Uninstalling the app or clearing its data will permanently delete all locally stored information.</p>
+      <p data-i18n="s7Text">Since all game data is stored locally on your device, you have full control over it. Uninstalling the app or clearing its data will permanently delete all locally stored information.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>8. Your Rights</h2></div>
+    <div class="section-title"><h2 data-i18n="s8Title">8. Your Rights</h2></div>
     <div class="card">
-      <p>As we do not collect personal data, there is no personal data to access, modify, or delete on our end. For data collected by third-party services (Google, RevenueCat, Firebase), please refer to their respective privacy policies.</p>
+      <p data-i18n="s8Text">As we do not collect personal data, there is no personal data to access, modify, or delete on our end. For data collected by third-party services (Google, RevenueCat, Firebase), please refer to their respective privacy policies.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>9. Changes to This Policy</h2></div>
+    <div class="section-title"><h2 data-i18n="s9Title">9. Changes to This Policy</h2></div>
     <div class="card">
-      <p>We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+      <p data-i18n="s9Text">We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title"><h2>10. Contact</h2></div>
+    <div class="section-title"><h2 data-i18n="s10Title">10. Contact</h2></div>
     <div class="card contact-card">
-      <p style="margin-bottom:14px">If you have any questions about this Privacy Policy, please contact us at:</p>
+      <p style="margin-bottom:14px" data-i18n="s10Intro">If you have any questions about this Privacy Policy, please contact us at:</p>
       <div class="author">Pierre-Louis Cargnello</div>
       <a class="email-btn" href="mailto:rava.auth@gmail.com">rava.auth@gmail.com</a>
     </div>
   </div>
 
   <nav class="page-nav">
-    <a class="nav-link" href="support.html">Support</a>
-    <a class="nav-link" href="rules.html">Rules</a>
-    <a class="nav-link active" href="privacy.html">Privacy</a>
+    <a class="nav-link" href="support.html" data-i18n="navSupport">Support</a>
+    <a class="nav-link" href="rules.html" data-i18n="navRules">Rules</a>
+    <a class="nav-link active" href="privacy.html" data-i18n="navPrivacy">Privacy</a>
   </nav>
 
   <footer>
-    <p>&copy; 2026 Pierre-Louis Cargnello — All rights reserved</p>
+    <p data-i18n-html="footerText">&copy; 2026 Pierre-Louis Cargnello — All rights reserved</p>
   </footer>
 
 </div>
 </div>
+
+<script>
+  const I18N = {
+    en: {
+      pageTitle: "Privacy Policy",
+      effectiveDate: "Effective April 2026",
+      s1Title: "1. Introduction",
+      s1Text: "DOOMNUT is a social deduction party game developed by Pierre-Louis Cargnello. This Privacy Policy explains how information is collected, used, and shared when you use the DOOMNUT mobile application.",
+      s2Title: "2. Information We Collect",
+      s2Text1: "DOOMNUT does <strong>not</strong> collect any personal information directly. The app does not require account creation, login, email address, or any form of registration.",
+      s2Text2: "All game data (player names, scores, settings, and game history) is stored <strong>locally on your device</strong> and is never transmitted to any server.",
+      s3Title: "3. Third-Party Services",
+      s3Intro: "The app uses the following third-party services that may collect information:",
+      s3Item1: '<strong>Google AdMob</strong> — Used to display advertisements. Google may collect device identifiers, IP address, and usage data to serve personalized or non-personalized ads. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google\'s Privacy Policy</a>.',
+      s3Item2: '<strong>RevenueCat</strong> — Used to manage in-app purchases. RevenueCat may process transaction data through the Google Play Store or Apple App Store. See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat\'s Privacy Policy</a>.',
+      s3Item3: '<strong>Firebase (Crashlytics &amp; Analytics)</strong> — Used to monitor app stability and understand usage patterns. Firebase may collect crash logs, device information, and anonymous usage data. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase\'s Privacy Policy</a>.',
+      s3Item4: '<strong>Google Play Store / Apple App Store</strong> — Handles app distribution and in-app purchase transactions. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google\'s Privacy Policy</a> and <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple\'s Privacy Policy</a>.',
+      s4Title: "4. Advertising",
+      s4Text: "DOOMNUT displays ads through Google AdMob. You may see personalized ads based on your interests, or non-personalized ads depending on your device settings and consent choices. You can manage your ad preferences in your device's settings.",
+      s5Title: "5. In-App Purchases",
+      s5Text: "DOOMNUT offers optional in-app purchases to unlock additional word packs. These transactions are processed entirely through the Google Play Store or Apple App Store. We do not have access to your payment information.",
+      s6Title: "6. Children's Privacy",
+      s6Text: "DOOMNUT is not directed at children under 13. We do not knowingly collect personal information from children. Since the app does not collect any personal data, no special provisions are required.",
+      s7Title: "7. Data Retention",
+      s7Text: "Since all game data is stored locally on your device, you have full control over it. Uninstalling the app or clearing its data will permanently delete all locally stored information.",
+      s8Title: "8. Your Rights",
+      s8Text: "As we do not collect personal data, there is no personal data to access, modify, or delete on our end. For data collected by third-party services (Google, RevenueCat, Firebase), please refer to their respective privacy policies.",
+      s9Title: "9. Changes to This Policy",
+      s9Text: "We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated effective date. Continued use of the app after changes constitutes acceptance of the updated policy.",
+      s10Title: "10. Contact",
+      s10Intro: "If you have any questions about this Privacy Policy, please contact us at:",
+      navSupport: "Support",
+      navRules: "Rules",
+      navPrivacy: "Privacy",
+      footerText: "&copy; 2026 Pierre-Louis Cargnello — All rights reserved",
+      _title: "DOOMNUT — Privacy Policy",
+      _htmlLang: "en",
+      _backLabel: "Back to support",
+    },
+    fr: {
+      pageTitle: "Politique de confidentialité",
+      effectiveDate: "En vigueur depuis avril 2026",
+      s1Title: "1. Introduction",
+      s1Text: "DOOMNUT est un jeu de société de déduction sociale développé par Pierre-Louis Cargnello. Cette politique de confidentialité explique comment les informations sont collectées, utilisées et partagées lorsque vous utilisez l'application mobile DOOMNUT.",
+      s2Title: "2. Informations collectées",
+      s2Text1: "DOOMNUT ne collecte <strong>aucune</strong> information personnelle directement. L'application ne nécessite ni création de compte, ni connexion, ni adresse email, ni aucune forme d'inscription.",
+      s2Text2: "Toutes les données de jeu (noms des joueurs, scores, paramètres et historique des parties) sont stockées <strong>localement sur votre appareil</strong> et ne sont jamais transmises à un serveur.",
+      s3Title: "3. Services tiers",
+      s3Intro: "L'application utilise les services tiers suivants qui peuvent collecter des informations :",
+      s3Item1: '<strong>Google AdMob</strong> — Utilisé pour afficher des publicités. Google peut collecter des identifiants d\'appareil, l\'adresse IP et des données d\'utilisation pour proposer des annonces personnalisées ou non. Voir la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politique de confidentialité de Google</a>.',
+      s3Item2: '<strong>RevenueCat</strong> — Utilisé pour gérer les achats intégrés. RevenueCat peut traiter les données de transaction via le Google Play Store ou l\'Apple App Store. Voir la <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">politique de confidentialité de RevenueCat</a>.',
+      s3Item3: '<strong>Firebase (Crashlytics &amp; Analytics)</strong> — Utilisé pour surveiller la stabilité de l\'application et comprendre les usages. Firebase peut collecter des rapports de plantage, des informations d\'appareil et des données d\'utilisation anonymes. Voir la <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">politique de confidentialité de Firebase</a>.',
+      s3Item4: '<strong>Google Play Store / Apple App Store</strong> — Gère la distribution de l\'application et les transactions d\'achats intégrés. Voir la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politique de confidentialité de Google</a> et la <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">politique de confidentialité d\'Apple</a>.',
+      s4Title: "4. Publicité",
+      s4Text: "DOOMNUT affiche des publicités via Google AdMob. Vous pouvez voir des annonces personnalisées selon vos centres d'intérêt, ou non personnalisées selon les paramètres et choix de consentement de votre appareil. Vous pouvez gérer vos préférences publicitaires dans les paramètres de votre appareil.",
+      s5Title: "5. Achats intégrés",
+      s5Text: "DOOMNUT propose des achats intégrés optionnels pour débloquer des packs de mots supplémentaires. Ces transactions sont entièrement gérées par le Google Play Store ou l'Apple App Store. Nous n'avons pas accès à vos informations de paiement.",
+      s6Title: "6. Confidentialité des enfants",
+      s6Text: "DOOMNUT ne s'adresse pas aux enfants de moins de 13 ans. Nous ne collectons pas sciemment d'informations personnelles auprès d'enfants. L'application ne collectant aucune donnée personnelle, aucune disposition particulière n'est requise.",
+      s7Title: "7. Conservation des données",
+      s7Text: "Toutes les données de jeu étant stockées localement sur votre appareil, vous en avez le plein contrôle. Désinstaller l'application ou effacer ses données supprimera définitivement toutes les informations stockées localement.",
+      s8Title: "8. Vos droits",
+      s8Text: "Comme nous ne collectons aucune donnée personnelle, il n'y a aucune donnée personnelle à consulter, modifier ou supprimer de notre côté. Pour les données collectées par les services tiers (Google, RevenueCat, Firebase), veuillez consulter leurs politiques de confidentialité respectives.",
+      s9Title: "9. Modifications de la politique",
+      s9Text: "Cette politique de confidentialité peut être mise à jour de temps à autre. Les modifications seront reflétées sur cette page avec une date d'entrée en vigueur actualisée. La poursuite de l'utilisation de l'application après modification constitue l'acceptation de la nouvelle politique.",
+      s10Title: "10. Contact",
+      s10Intro: "Pour toute question concernant cette politique de confidentialité, contactez-nous à :",
+      navSupport: "Support",
+      navRules: "Règles",
+      navPrivacy: "Confidentialité",
+      footerText: "&copy; 2026 Pierre-Louis Cargnello — Tous droits réservés",
+      _title: "DOOMNUT — Politique de confidentialité",
+      _htmlLang: "fr",
+      _backLabel: "Retour au support",
+    },
+  };
+
+  function applyLang(lang){
+    const dict = I18N[lang] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (dict[k] !== undefined) el.textContent = dict[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const k = el.getAttribute('data-i18n-html');
+      if (dict[k] !== undefined) el.innerHTML = dict[k];
+    });
+    if (dict._title) document.title = dict._title;
+    if (dict._htmlLang) document.documentElement.setAttribute('lang', dict._htmlLang);
+    const back = document.querySelector('.back-btn-icon');
+    if (back && dict._backLabel) back.setAttribute('aria-label', dict._backLabel);
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('doomnut.lang', lang); } catch(e) {}
+  }
+
+  function detectLang(){
+    try {
+      const saved = localStorage.getItem('doomnut.lang');
+      if (saved && I18N[saved]) return saved;
+    } catch(e) {}
+    const nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    return nav.startsWith('fr') ? 'fr' : 'en';
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+
+  applyLang(detectLang());
+</script>
 
 </body>
 </html>
