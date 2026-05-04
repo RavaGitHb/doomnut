@@ -539,6 +539,28 @@
     text-align:center;
   }
 
+  /* ===== GAME PREVIEW (gallery) ===== */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+    margin-top:8px;
+  }
+  .gallery img{
+    width:100%;
+    height:auto;
+    display:block;
+    border:1px solid var(--border-faint);
+    border-radius:8px;
+    box-shadow:0 0 18px rgba(128,222,234,0.10);
+    transition:transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .gallery img:hover{
+    border-color:var(--cyan);
+    box-shadow:0 0 28px rgba(128,222,234,0.40);
+    transform:translateY(-3px);
+  }
+
   /* ===== FAQ (accordion via details/summary) ===== */
   .faq-item{
     background:rgba(5,5,8,0.85);
@@ -669,6 +691,7 @@
   }
 
   @media (max-width:540px){
+    .gallery{grid-template-columns:repeat(2, 1fr); gap:10px}
     .container{padding:14px 12px 50px}
     header{padding:50px 0 22px}
     .title-wrap{
@@ -790,6 +813,18 @@
     <p data-i18n="aboutP2">One Officer holds a secret word. The Crew tries to guess it through yes/no questions. But hidden among them, a Virus and a Parasite are pulling the mission in their own direction.</p>
   </section>
 
+  <section>
+    <h2 data-i18n="previewTitle">Game Preview</h2>
+    <div class="gallery">
+      <img src="support_assets/screen_1.webp" alt="DOOMNUT home screen" loading="lazy">
+      <img src="support_assets/screen_2.webp" alt="Game introduction" loading="lazy">
+      <img src="support_assets/screen_3.webp" alt="Role distribution" loading="lazy">
+      <img src="support_assets/screen_4.webp" alt="Officer betting system" loading="lazy">
+      <img src="support_assets/screen_5.webp" alt="Bio-scanner gameplay" loading="lazy">
+      <img src="support_assets/screen_6.webp" alt="Game over screen" loading="lazy">
+    </div>
+  </section>
+
   <div class="rules-cta-wrap">
     <a class="rules-cta" href="rules.html" data-i18n="rulesCta">Read the Game Rules</a>
   </div>
@@ -894,6 +929,7 @@
       availableNow: "Available now",
       comingSoon: "Coming soon",
       rulesCta: "Read the Game Rules",
+      previewTitle: "Game Preview",
       crewTitle: "The Crew",
       roleOfficer: "Officer",
       roleOfficerDesc: "Knows the secret word and sets the wager. Answers only YES or NO.",
@@ -936,6 +972,7 @@
       availableNow: "Disponible maintenant",
       comingSoon: "Bientôt disponible",
       rulesCta: "Lire les règles du jeu",
+      previewTitle: "Aperçu du jeu",
       crewTitle: "L'Équipage",
       roleOfficer: "Officier",
       roleOfficerDesc: "Connaît le mot secret et choisit la mise. Ne répond que par OUI ou NON.",
