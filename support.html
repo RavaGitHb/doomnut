@@ -109,11 +109,19 @@
   /* ===== CONTENT ===== */
   .container{position:relative;z-index:10;max-width:880px;margin:0 auto;padding:24px 24px 80px}
 
-  /* ===== LANG SWITCH (top-right floating, rules-cta look) ===== */
+  /* ===== LANG SWITCH (sticky-corner pattern) ===== */
+  .sticky-corner{
+    position:sticky;
+    top:0;
+    height:0;
+    z-index:999;
+    pointer-events:none;
+    overflow:visible;
+  }
   .lang-switch{
-    position:fixed;
+    position:absolute;
     top:18px;right:18px;
-    z-index:20;
+    pointer-events:auto;
     display:flex;gap:8px;
   }
   .lang-btn{
@@ -685,9 +693,11 @@
 </div>
 <div class="scanlines"></div>
 
-<div class="lang-switch" role="group" aria-label="Language">
-  <button class="lang-btn" data-lang="en" type="button">EN</button>
-  <button class="lang-btn" data-lang="fr" type="button">FR</button>
+<div class="sticky-corner">
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="en" type="button">EN</button>
+    <button class="lang-btn" data-lang="fr" type="button">FR</button>
+  </div>
 </div>
 
 <div class="page-clip">
@@ -946,26 +956,6 @@
   });
 
   applyLang(detectLang());
-
-  /* Lang switch sticky-top fallback — bulletproof across all browsers. */
-  (function() {
-    const ls = document.querySelector('.lang-switch');
-    if (!ls) return;
-    ls.style.position = 'absolute';
-    let raf = 0;
-    function sync() {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const y = window.scrollY || window.pageYOffset || 0;
-        const offset = window.matchMedia('(max-width: 540px)').matches ? 6 : 18;
-        ls.style.top = (y + offset) + 'px';
-        raf = 0;
-      });
-    }
-    sync();
-    window.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync, { passive: true });
-  })();
 </script>
 
 </body>

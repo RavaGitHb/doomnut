@@ -118,11 +118,19 @@
     flex-direction:column;
   }
 
-  /* ===== LANG SWITCH ===== */
+  /* ===== LANG SWITCH (sticky-corner pattern, no JS, no fixed) ===== */
+  .sticky-corner{
+    position:sticky;
+    top:0;
+    height:0;
+    z-index:999;
+    pointer-events:none;
+    overflow:visible;
+  }
   .lang-switch{
-    position:fixed;
+    position:absolute;
     top:18px;right:18px;
-    z-index:20;
+    pointer-events:auto;
     display:flex;gap:8px;
   }
   .lang-btn{
@@ -381,10 +389,10 @@
     .container{padding:14px 12px 28px}
     header{flex:0 0 auto; padding:58px 0 12px}
     .title-wrap{
-      width:180vw;
+      width:130vw;
       max-width:none;
-      margin-left:-40vw;
-      margin-right:-40vw;
+      margin-left:-15vw;
+      margin-right:-15vw;
     }
     .tagline{margin-top:14px;font-size:0.62rem;letter-spacing:0.20em}
     .install-section{margin:30px 0 16px}
@@ -429,9 +437,11 @@
 </div>
 <div class="scanlines" aria-hidden="true"></div>
 
-<div class="lang-switch" role="group" aria-label="Language">
-  <button class="lang-btn" data-lang="en" type="button">EN</button>
-  <button class="lang-btn" data-lang="fr" type="button">FR</button>
+<div class="sticky-corner">
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button class="lang-btn" data-lang="en" type="button">EN</button>
+    <button class="lang-btn" data-lang="fr" type="button">FR</button>
+  </div>
 </div>
 
 <div class="page-clip">
@@ -535,28 +545,6 @@
   });
 
   applyLang(detectLang());
-
-  /* Lang switch sticky-top fallback — bulletproof across all browsers.
-     Some setups break position:fixed (iOS Safari + body overflow,
-     transformed ancestors, etc). Force absolute + sync top to scrollY. */
-  (function() {
-    const ls = document.querySelector('.lang-switch');
-    if (!ls) return;
-    ls.style.position = 'absolute';
-    let raf = 0;
-    function sync() {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const y = window.scrollY || window.pageYOffset || 0;
-        const offset = window.matchMedia('(max-width: 540px)').matches ? 6 : 18;
-        ls.style.top = (y + offset) + 'px';
-        raf = 0;
-      });
-    }
-    sync();
-    window.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync, { passive: true });
-  })();
 </script>
 
 </body>
