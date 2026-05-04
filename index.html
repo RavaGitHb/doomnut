@@ -46,8 +46,12 @@
     color:var(--text);
     font-family:'Montserrat',sans-serif;
     line-height:1.5;
-    overflow-x:hidden;     /* fallback for old browsers */
-    overflow-x:clip;       /* modern: clips without breaking position:fixed on iOS */
+    /* No overflow on body — would break position:fixed on iOS Safari.
+       Horizontal clipping is handled by .page-clip wrapper instead. */
+  }
+  .page-clip{
+    width:100%;
+    overflow-x:hidden;
   }
 
   /* ===== STARFIELD ===== */
@@ -431,6 +435,7 @@
   <button class="lang-btn" data-lang="fr" type="button">FR</button>
 </div>
 
+<div class="page-clip">
 <div class="container">
 
   <header>
@@ -476,6 +481,7 @@
     <p>2026 Rava Studio</p>
   </footer>
 
+</div>
 </div>
 
 <script>

@@ -43,8 +43,11 @@
     color:var(--text);
     font-family:'Montserrat',sans-serif;
     line-height:1.65;
+    /* No overflow on body — would break position:fixed on iOS Safari. */
+  }
+  .page-clip{
+    width:100%;
     overflow-x:hidden;
-    overflow-x:clip;
   }
 
   /* ===== STARFIELD ===== */
@@ -316,6 +319,7 @@
 </div>
 <div class="scanlines"></div>
 
+<div class="page-clip">
 <div class="container">
 
   <div class="app-bar">
@@ -417,6 +421,7 @@
     <p>&copy; 2026 Pierre-Louis Cargnello — All rights reserved</p>
   </footer>
 
+</div>
 </div>
 
 </body>
