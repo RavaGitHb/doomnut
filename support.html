@@ -539,26 +539,116 @@
     text-align:center;
   }
 
-  /* ===== GAME PREVIEW (gallery) ===== */
-  .gallery{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:14px;
+  /* ===== GAME PREVIEW (carousel with scroll-snap) ===== */
+  .carousel{
+    position:relative;
     margin-top:8px;
   }
-  .gallery img{
+  .carousel-track{
+    display:flex;
+    gap:18px;
+    overflow-x:auto;
+    overflow-y:visible;
+    scroll-snap-type:x mandatory;
+    scroll-padding:0 calc(50% - 140px);
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+    padding:14px 0 22px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .carousel-track::-webkit-scrollbar{display:none}
+  .carousel-slide{
+    flex:0 0 auto;
+    width:clamp(190px, 28vw, 260px);
+    scroll-snap-align:center;
+    position:relative;
+    transition:transform 0.4s ease, filter 0.4s ease;
+  }
+  .carousel-slide:first-child{margin-left:calc(50% - clamp(190px, 28vw, 260px)/2)}
+  .carousel-slide:last-child{margin-right:calc(50% - clamp(190px, 28vw, 260px)/2)}
+  .carousel-slide img{
     width:100%;
     height:auto;
     display:block;
-    border:1px solid var(--border-faint);
-    border-radius:8px;
-    box-shadow:0 0 18px rgba(128,222,234,0.10);
-    transition:transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    border:2px solid rgba(128,222,234,0.30);
+    border-radius:14px;
+    box-shadow:0 0 22px rgba(128,222,234,0.18);
+    transition:border-color 0.3s, box-shadow 0.3s;
   }
-  .gallery img:hover{
+  /* Lateral slides slightly faded */
+  .carousel-slide:not(.active){
+    transform:scale(0.92);
+    filter:brightness(0.65) saturate(0.85);
+  }
+  .carousel-slide.active img{
     border-color:var(--cyan);
-    box-shadow:0 0 28px rgba(128,222,234,0.40);
-    transform:translateY(-3px);
+    box-shadow:0 0 36px rgba(128,222,234,0.50), 0 0 60px rgba(128,222,234,0.18);
+  }
+
+  /* Arrows */
+  .carousel-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:44px;height:44px;
+    border:2px solid var(--cyan);
+    border-radius:50%;
+    background:rgba(0,30,40,0.85);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    color:var(--cyan);
+    cursor:pointer;
+    z-index:5;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;
+    font-weight:700;
+    text-shadow:0 0 8px rgba(128,222,234,0.8);
+    box-shadow:0 0 18px rgba(128,222,234,0.35);
+    transition:all 0.25s;
+    font-family:'Montserrat',sans-serif;
+    line-height:1;
+    padding:0;
+  }
+  .carousel-arrow:hover{
+    background:rgba(0,51,51,0.95);
+    box-shadow:0 0 30px rgba(128,222,234,0.65);
+    transform:translateY(-50%) scale(1.08);
+  }
+  .carousel-arrow:active{transform:translateY(-50%) scale(0.95)}
+  .carousel-arrow:disabled{
+    opacity:0.35;
+    cursor:not-allowed;
+    box-shadow:none;
+  }
+  .carousel-arrow:disabled:hover{
+    background:rgba(0,30,40,0.85);
+    transform:translateY(-50%);
+  }
+  .carousel-arrow.prev{left:8px}
+  .carousel-arrow.next{right:8px}
+
+  /* Indicator dots */
+  .carousel-dots{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-top:14px;
+  }
+  .carousel-dot{
+    width:8px;height:8px;
+    border-radius:50%;
+    background:rgba(128,222,234,0.30);
+    border:none;
+    cursor:pointer;
+    padding:0;
+    transition:all 0.3s;
+  }
+  .carousel-dot:hover{background:rgba(128,222,234,0.65)}
+  .carousel-dot.active{
+    background:var(--cyan);
+    box-shadow:0 0 10px var(--cyan);
+    width:26px;
+    border-radius:4px;
   }
 
   /* ===== FAQ (accordion via details/summary) ===== */
@@ -691,7 +781,10 @@
   }
 
   @media (max-width:540px){
-    .gallery{grid-template-columns:repeat(2, 1fr); gap:10px}
+    .carousel-arrow{display:none}
+    .carousel-slide{width:clamp(180px, 65vw, 230px)}
+    .carousel-slide:first-child{margin-left:calc(50% - clamp(180px, 65vw, 230px)/2)}
+    .carousel-slide:last-child{margin-right:calc(50% - clamp(180px, 65vw, 230px)/2)}
     .container{padding:14px 12px 50px}
     header{padding:50px 0 22px}
     .title-wrap{
@@ -815,13 +908,25 @@
 
   <section>
     <h2 data-i18n="previewTitle">Game Preview</h2>
-    <div class="gallery">
-      <img src="support_assets/screen_1.webp" alt="DOOMNUT home screen" loading="lazy">
-      <img src="support_assets/screen_2.webp" alt="Game introduction" loading="lazy">
-      <img src="support_assets/screen_3.webp" alt="Role distribution" loading="lazy">
-      <img src="support_assets/screen_4.webp" alt="Officer betting system" loading="lazy">
-      <img src="support_assets/screen_5.webp" alt="Bio-scanner gameplay" loading="lazy">
-      <img src="support_assets/screen_6.webp" alt="Game over screen" loading="lazy">
+    <div class="carousel">
+      <button class="carousel-arrow prev" type="button" aria-label="Previous screenshot">‹</button>
+      <button class="carousel-arrow next" type="button" aria-label="Next screenshot">›</button>
+      <div class="carousel-track">
+        <div class="carousel-slide"><img src="support_assets/screen_1.webp" alt="DOOMNUT home screen" loading="lazy"></div>
+        <div class="carousel-slide"><img src="support_assets/screen_2.webp" alt="Game introduction" loading="lazy"></div>
+        <div class="carousel-slide"><img src="support_assets/screen_3.webp" alt="Role distribution" loading="lazy"></div>
+        <div class="carousel-slide"><img src="support_assets/screen_4.webp" alt="Officer betting system" loading="lazy"></div>
+        <div class="carousel-slide"><img src="support_assets/screen_5.webp" alt="Bio-scanner gameplay" loading="lazy"></div>
+        <div class="carousel-slide"><img src="support_assets/screen_6.webp" alt="Game over screen" loading="lazy"></div>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Screenshot navigation">
+        <button class="carousel-dot" type="button" aria-label="Slide 1"></button>
+        <button class="carousel-dot" type="button" aria-label="Slide 2"></button>
+        <button class="carousel-dot" type="button" aria-label="Slide 3"></button>
+        <button class="carousel-dot" type="button" aria-label="Slide 4"></button>
+        <button class="carousel-dot" type="button" aria-label="Slide 5"></button>
+        <button class="carousel-dot" type="button" aria-label="Slide 6"></button>
+      </div>
     </div>
   </section>
 
@@ -1040,6 +1145,64 @@
   });
 
   applyLang(detectLang());
+
+  /* ===== CAROUSEL ===== */
+  (function() {
+    const track = document.querySelector('.carousel-track');
+    if (!track) return;
+    const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+    const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+    const prev = document.querySelector('.carousel-arrow.prev');
+    const next = document.querySelector('.carousel-arrow.next');
+
+    function getActiveIdx() {
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let activeIdx = 0;
+      let minDist = Infinity;
+      slides.forEach((s, i) => {
+        const slideCenter = s.offsetLeft + s.offsetWidth / 2;
+        const dist = Math.abs(slideCenter - center);
+        if (dist < minDist) { minDist = dist; activeIdx = i; }
+      });
+      return activeIdx;
+    }
+
+    function scrollToSlide(idx) {
+      const slide = slides[idx];
+      if (!slide) return;
+      const offset = slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2;
+      track.scrollTo({ left: offset, behavior: 'smooth' });
+    }
+
+    function update() {
+      const idx = getActiveIdx();
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      if (prev) prev.disabled = idx === 0;
+      if (next) next.disabled = idx === slides.length - 1;
+    }
+
+    dots.forEach((dot, i) => dot.addEventListener('click', () => scrollToSlide(i)));
+    if (prev) prev.addEventListener('click', () => scrollToSlide(Math.max(0, getActiveIdx() - 1)));
+    if (next) next.addEventListener('click', () => scrollToSlide(Math.min(slides.length - 1, getActiveIdx() + 1)));
+
+    let scrollDebounce;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollDebounce);
+      scrollDebounce = setTimeout(update, 80);
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      clearTimeout(scrollDebounce);
+      scrollDebounce = setTimeout(update, 100);
+    });
+
+    /* Init: scroll to first slide and apply active state */
+    requestAnimationFrame(() => {
+      scrollToSlide(0);
+      setTimeout(update, 100);
+    });
+  })();
 </script>
 
 </body>
