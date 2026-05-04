@@ -89,7 +89,42 @@
   /* ===== CONTENT ===== */
   .container{position:relative;z-index:10;max-width:880px;margin:0 auto;padding:24px 24px 80px}
 
-  /* ===== HEADER (mirrors CyberAppBar from lib/widgets/common/cyber_app_bar.dart) ===== */
+  /* ===== LANG SWITCH ===== */
+  .lang-switch{
+    position:fixed;
+    top:18px;right:18px;
+    z-index:20;
+    display:flex;gap:0;
+    background:rgba(5,5,8,0.85);
+    border:1px solid var(--cyan);
+    border-radius:999px;
+    overflow:hidden;
+    box-shadow:0 0 14px rgba(128,222,234,0.30);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+  .lang-btn{
+    padding:6px 14px;
+    background:transparent;
+    border:0;
+    color:var(--cyan);
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    cursor:pointer;
+    text-shadow:0 0 6px rgba(128,222,234,0.45);
+    transition:all 0.2s;
+  }
+  .lang-btn:hover{background:rgba(128,222,234,0.12)}
+  .lang-btn.active{
+    background:var(--cyan);
+    color:#000;
+    text-shadow:none;
+    cursor:default;
+  }
+
+  /* ===== HEADER ===== */
   .app-bar{
     padding:14px 4px 24px;
     border-bottom:1px solid var(--border-faint);
@@ -153,7 +188,7 @@
     text-shadow:0 0 10px rgba(128,222,234,0.5);
   }
 
-  /* ===== GLASS CARD (mirrors _GlassCard) ===== */
+  /* ===== GLASS CARD ===== */
   .card{
     background:rgba(0,0,0,0.65);
     border:1px solid rgba(128,222,234,0.35);
@@ -191,7 +226,6 @@
     display:flex;align-items:center;justify-content:center;
   }
   .role-badge::before{
-    /* the icon lives here */
     content:'';
     width:80%;height:80%;
     background-color:currentColor;
@@ -210,7 +244,6 @@
     -webkit-mask-image:url('support_assets/iconequipage.png');
     mask-image:url('support_assets/iconequipage.png');
   }
-  /* Virus uses BlendMode.modulate — preserves icon detail tinted with red */
   .role-virus{color:var(--red-virus)}
   .role-virus .role-badge::before{
     background-color:var(--red-virus);
@@ -243,7 +276,7 @@
     line-height:1.5;
   }
 
-  /* ===== FLOW STEPS (mirrors rules_screen.dart _StepLine — donuticontel.png) ===== */
+  /* ===== FLOW STEPS ===== */
   .step{
     display:flex;align-items:flex-start;gap:14px;
     padding:8px 0;
@@ -309,7 +342,7 @@
     text-shadow:0 0 8px currentColor;
   }
 
-  /* ===== SCORING GRID (4 role cards) ===== */
+  /* ===== SCORING GRID ===== */
   .points-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -326,7 +359,6 @@
     box-shadow:0 0 18px color-mix(in srgb, currentColor 28%, transparent);
     min-height:200px;
   }
-  /* watermark icon */
   .points-card::before{
     content:'';
     position:absolute;
@@ -349,7 +381,6 @@
     -webkit-mask-image:url('support_assets/iconequipage.png');
     mask-image:url('support_assets/iconequipage.png');
   }
-  /* Virus watermark uses modulate too */
   .points-card.role-virus::before{
     background-color:var(--red-virus);
     background-image:url('support_assets/iconvirus.webp');
@@ -394,7 +425,7 @@
     white-space:pre-line;
   }
 
-  /* ===== PAGE NAV (consistent across support / rules / privacy) ===== */
+  /* ===== PAGE NAV ===== */
   .page-nav{
     display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
     margin-top:56px;padding-top:32px;
@@ -443,6 +474,8 @@
     .wager-points{font-size:1.15rem}
     .wager-time{font-size:0.92rem}
     .role-badge{width:42px;height:42px}
+    .lang-switch{top:12px;right:12px}
+    .lang-btn{padding:5px 11px;font-size:0.66rem}
   }
 </style>
 </head>
@@ -455,6 +488,11 @@
 </div>
 <div class="scanlines"></div>
 
+<div class="lang-switch" role="group" aria-label="Language">
+  <button class="lang-btn" data-lang="en" type="button">EN</button>
+  <button class="lang-btn" data-lang="fr" type="button">FR</button>
+</div>
+
 <div class="container">
 
   <div class="app-bar">
@@ -463,50 +501,50 @@
         <span class="back-arrow"></span>
       </a>
     </div>
-    <h1 class="page-title">Game Rules</h1>
+    <h1 class="page-title" data-i18n="pageTitle">Game Rules</h1>
   </div>
 
   <!-- BRIEFING -->
   <div class="section">
-    <div class="section-title"><h2>Briefing</h2></div>
+    <div class="section-title"><h2 data-i18n="briefingTitle">Briefing</h2></div>
     <div class="card">
-      <p class="body-line">Find the Secret Word by questioning the Officer. Starting from the Officer and going clockwise, players take turns asking questions or making proposals. As soon as someone proposes the exact word, the mission ends.</p>
-      <p class="body-line">If someone proposes the Parasite's word, they win the mission. There will be no vote.</p>
-      <p class="body-line">Players vote to designate the Virus, if the word was found.</p>
-      <p class="body-line">The Parasite role can be toggled on or off.</p>
+      <p class="body-line" data-i18n="briefing1">Find the Secret Word by questioning the Officer. Starting from the Officer and going clockwise, players take turns asking questions or making proposals. As soon as someone proposes the exact word, the mission ends.</p>
+      <p class="body-line" data-i18n="briefing2">If someone proposes the Parasite's word, they win the mission. There will be no vote.</p>
+      <p class="body-line" data-i18n="briefing3">Players vote to designate the Virus, if the word was found.</p>
+      <p class="body-line" data-i18n="briefing4">The Parasite role can be toggled on or off.</p>
     </div>
   </div>
 
   <!-- ROLES -->
   <div class="section">
-    <div class="section-title"><h2>Roles</h2></div>
+    <div class="section-title"><h2 data-i18n="rolesTitle">Roles</h2></div>
     <div class="card">
       <div class="role-row role-officer">
         <div class="role-badge"></div>
         <div class="role-text">
-          <div class="role-name">Officer</div>
-          <div class="role-desc">Knows the word and picks the wager. Only answers questions with YES/NO.</div>
+          <div class="role-name" data-i18n="roleOfficer">Officer</div>
+          <div class="role-desc" data-i18n="roleOfficerDesc">Knows the word and picks the wager. Only answers questions with YES/NO.</div>
         </div>
       </div>
       <div class="role-row role-crew">
         <div class="role-badge"></div>
         <div class="role-text">
-          <div class="role-name">Crew</div>
-          <div class="role-desc">Looks for the word by asking questions or making proposals.</div>
+          <div class="role-name" data-i18n="roleCrew">Crew</div>
+          <div class="role-desc" data-i18n="roleCrewDesc">Looks for the word by asking questions or making proposals.</div>
         </div>
       </div>
       <div class="role-row role-virus">
         <div class="role-badge"></div>
         <div class="role-text">
-          <div class="role-name">Virus</div>
-          <div class="role-desc">Knows the word, asks questions and helps in its discovery without getting caught.</div>
+          <div class="role-name" data-i18n="roleVirus">Virus</div>
+          <div class="role-desc" data-i18n="roleVirusDesc">Knows the word, asks questions and helps in its discovery without getting caught.</div>
         </div>
       </div>
       <div class="role-row role-parasite">
         <div class="role-badge"></div>
         <div class="role-text">
-          <div class="role-name">Parasite (optional)</div>
-          <div class="role-desc">Receives a word close to the secret word. If someone proposes their word, they win the mission. There will be no vote. To score points, they can also try to make the mission fail.</div>
+          <div class="role-name" data-i18n="roleParasite">Parasite (optional)</div>
+          <div class="role-desc" data-i18n="roleParasiteDesc">Receives a word close to the secret word. If someone proposes their word, they win the mission. There will be no vote. To score points, they can also try to make the mission fail.</div>
         </div>
       </div>
     </div>
@@ -514,34 +552,34 @@
 
   <!-- MISSION FLOW -->
   <div class="section">
-    <div class="section-title"><h2>Mission Flow</h2></div>
+    <div class="section-title"><h2 data-i18n="flowTitle">Mission Flow</h2></div>
     <div class="card">
       <div class="step">
         <div class="step-icon"></div>
         <div class="step-text">
-          <div class="step-label">1. Timer &amp; Wager</div>
-          <div class="step-detail">The Officer chooses the duration: 2 min 30 / 3 min 30 / 5 min 30. The shorter the timer, the higher the wager.</div>
+          <div class="step-label" data-i18n-html="step1Label">1. Timer &amp; Wager</div>
+          <div class="step-detail" data-i18n="step1Detail">The Officer chooses the duration: 2 min 30 / 3 min 30 / 5 min 30. The shorter the timer, the higher the wager.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-icon"></div>
         <div class="step-text">
-          <div class="step-label">2. Questioning</div>
-          <div class="step-detail">Starting from the Officer and going clockwise, players take turns asking questions or making proposals. Answers are strictly YES / NO.</div>
+          <div class="step-label" data-i18n="step2Label">2. Questioning</div>
+          <div class="step-detail" data-i18n="step2Detail">Starting from the Officer and going clockwise, players take turns asking questions or making proposals. Answers are strictly YES / NO.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-icon"></div>
         <div class="step-text">
-          <div class="step-label">3. Instant End</div>
-          <div class="step-detail">As soon as the secret word OR the Parasite's word is proposed, the mission ends.</div>
+          <div class="step-label" data-i18n="step3Label">3. Instant End</div>
+          <div class="step-detail" data-i18n="step3Detail">As soon as the secret word OR the Parasite's word is proposed, the mission ends.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-icon"></div>
         <div class="step-text">
-          <div class="step-label">4. Vote</div>
-          <div class="step-detail">If the Officer's word was found, players debate and vote on who the Virus is.</div>
+          <div class="step-label" data-i18n="step4Label">4. Vote</div>
+          <div class="step-detail" data-i18n="step4Detail">If the Officer's word was found, players debate and vote on who the Virus is.</div>
         </div>
       </div>
     </div>
@@ -549,28 +587,28 @@
 
   <!-- SCORING SYSTEM -->
   <div class="section">
-    <div class="section-title"><h2>Scoring System</h2></div>
+    <div class="section-title"><h2 data-i18n="scoringTitle">Scoring System</h2></div>
     <div class="card">
-      <div class="sub-title">Wager / Timer</div>
+      <div class="sub-title" data-i18n="wagerHeader">Wager / Timer</div>
       <div class="wager-list">
         <div class="wager wager-low">
           <div class="wager-left">
-            <div class="wager-points">2 PTS</div>
-            <div class="wager-level">Low Wager</div>
+            <div class="wager-points" data-i18n="wagerLowPts">2 PTS</div>
+            <div class="wager-level" data-i18n="wagerLow">Low Wager</div>
           </div>
           <div class="wager-time">5 MIN 30</div>
         </div>
         <div class="wager wager-medium">
           <div class="wager-left">
-            <div class="wager-points">4 PTS</div>
-            <div class="wager-level">Medium Wager</div>
+            <div class="wager-points" data-i18n="wagerMediumPts">4 PTS</div>
+            <div class="wager-level" data-i18n="wagerMedium">Medium Wager</div>
           </div>
           <div class="wager-time">3 MIN 30</div>
         </div>
         <div class="wager wager-high">
           <div class="wager-left">
-            <div class="wager-points">6 PTS</div>
-            <div class="wager-level">High Wager</div>
+            <div class="wager-points" data-i18n="wagerHighPts">6 PTS</div>
+            <div class="wager-level" data-i18n="wagerHigh">High Wager</div>
           </div>
           <div class="wager-time">2 MIN 30</div>
         </div>
@@ -579,91 +617,91 @@
       <div class="points-grid">
         <div class="points-card role-officer">
           <div class="points-card-content">
-            <div class="points-card-title">Officer</div>
+            <div class="points-card-title" data-i18n="roleOfficer">Officer</div>
             <div class="points-line victory">
-              <div class="points-line-label">Victory</div>
-              <div class="points-line-value">Wager value
+              <div class="points-line-label" data-i18n="victoryLabel">Victory</div>
+              <div class="points-line-value" data-i18n="officerVictory">Wager value
 +1 pt if the Virus is caught</div>
             </div>
             <div class="points-line defeat">
-              <div class="points-line-label">Defeat</div>
-              <div class="points-line-value">-2 pts</div>
+              <div class="points-line-label" data-i18n="defeatLabel">Defeat</div>
+              <div class="points-line-value" data-i18n="officerDefeat">-2 pts</div>
             </div>
             <div class="points-line trap">
-              <div class="points-line-label">Trap</div>
-              <div class="points-line-value">0 pt</div>
+              <div class="points-line-label" data-i18n="trapLabel">Trap</div>
+              <div class="points-line-value" data-i18n="officerTrap">0 pt</div>
             </div>
           </div>
         </div>
 
         <div class="points-card role-crew">
           <div class="points-card-content">
-            <div class="points-card-title">Crew</div>
+            <div class="points-card-title" data-i18n="roleCrew">Crew</div>
             <div class="points-line victory">
-              <div class="points-line-label">Victory</div>
-              <div class="points-line-value">1 pt
+              <div class="points-line-label" data-i18n="victoryLabel">Victory</div>
+              <div class="points-line-value" data-i18n="crewVictory">1 pt
 +1 pt if the Virus is caught</div>
             </div>
             <div class="points-line defeat">
-              <div class="points-line-label">Defeat</div>
-              <div class="points-line-value">-1 pt</div>
+              <div class="points-line-label" data-i18n="defeatLabel">Defeat</div>
+              <div class="points-line-value" data-i18n="crewDefeat">-1 pt</div>
             </div>
             <div class="points-line trap">
-              <div class="points-line-label">Trap</div>
-              <div class="points-line-value">0 pt</div>
+              <div class="points-line-label" data-i18n="trapLabel">Trap</div>
+              <div class="points-line-value" data-i18n="crewTrap">0 pt</div>
             </div>
           </div>
         </div>
 
         <div class="points-card role-virus">
           <div class="points-card-content">
-            <div class="points-card-title">Virus</div>
+            <div class="points-card-title" data-i18n="roleVirus">Virus</div>
             <div class="points-line victory">
-              <div class="points-line-label">Victory</div>
-              <div class="points-line-value">Wager / 2 + 3 pts
+              <div class="points-line-label" data-i18n="victoryLabel">Victory</div>
+              <div class="points-line-value" data-i18n="virusVictory">Wager / 2 + 3 pts
 0 pt if the Virus is caught</div>
             </div>
             <div class="points-line defeat">
-              <div class="points-line-label">Defeat</div>
-              <div class="points-line-value">-1 pt</div>
+              <div class="points-line-label" data-i18n="defeatLabel">Defeat</div>
+              <div class="points-line-value" data-i18n="virusDefeat">-1 pt</div>
             </div>
             <div class="points-line trap">
-              <div class="points-line-label">Trap</div>
-              <div class="points-line-value">0 pt</div>
+              <div class="points-line-label" data-i18n="trapLabel">Trap</div>
+              <div class="points-line-value" data-i18n="virusTrap">0 pt</div>
             </div>
           </div>
         </div>
 
         <div class="points-card role-parasite">
           <div class="points-card-content">
-            <div class="points-card-title">Parasite</div>
+            <div class="points-card-title" data-i18n="parasiteCardTitle">Parasite</div>
             <div class="points-line victory">
-              <div class="points-line-label">Victory</div>
-              <div class="points-line-value">0 pt
+              <div class="points-line-label" data-i18n="victoryLabel">Victory</div>
+              <div class="points-line-value" data-i18n="parasiteVictory">0 pt
 +1 pt if the Virus is caught</div>
             </div>
             <div class="points-line defeat">
-              <div class="points-line-label">Defeat</div>
-              <div class="points-line-value">+2 pts</div>
+              <div class="points-line-label" data-i18n="defeatLabel">Defeat</div>
+              <div class="points-line-value" data-i18n="parasiteDefeat">+2 pts</div>
             </div>
             <div class="points-line trap">
-              <div class="points-line-label">Trap</div>
-              <div class="points-line-value">+6 pts!</div>
+              <div class="points-line-label" data-i18n="trapLabel">Trap</div>
+              <div class="points-line-value" data-i18n="parasiteTrap">+6 pts!</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="sub-title">Notes</div>
-      <p class="body-line">• Players cannot have a negative score.</p>
-      <p class="body-line">• Points accumulate mission after mission. The first to reach the target score wins the game (and eats the delicious chocolate donut).</p>
+      <div class="sub-title" data-i18n="notesHeader">Notes</div>
+      <p class="body-line" data-i18n="note1">• Players cannot have a negative score.</p>
+      <p class="body-line" data-i18n="note2">• Points accumulate mission after mission. The first to reach the target score wins the game (and eats the delicious chocolate donut).</p>
     </div>
   </div>
 
   <nav class="page-nav">
-    <a class="nav-link" href="support.html">Support</a>
-    <a class="nav-link active" href="rules.html">Rules</a>
-    <a class="nav-link" href="privacy.html">Privacy</a>
+    <a class="nav-link" href="support.html" data-i18n="navSupport">Support</a>
+    <a class="nav-link active" href="rules.html" data-i18n="navRules">Rules</a>
+    <a class="nav-link" href="privacy.html" data-i18n="navPrivacy">Privacy</a>
   </nav>
 
   <footer>
@@ -671,6 +709,164 @@
   </footer>
 
 </div>
+
+<script>
+  const I18N = {
+    en: {
+      pageTitle: "Game Rules",
+      briefingTitle: "Briefing",
+      briefing1: "Find the Secret Word by questioning the Officer. Starting from the Officer and going clockwise, players take turns asking questions or making proposals. As soon as someone proposes the exact word, the mission ends.",
+      briefing2: "If someone proposes the Parasite's word, they win the mission. There will be no vote.",
+      briefing3: "Players vote to designate the Virus, if the word was found.",
+      briefing4: "The Parasite role can be toggled on or off.",
+      rolesTitle: "Roles",
+      roleOfficer: "Officer",
+      roleOfficerDesc: "Knows the word and picks the wager. Only answers questions with YES/NO.",
+      roleCrew: "Crew",
+      roleCrewDesc: "Looks for the word by asking questions or making proposals.",
+      roleVirus: "Virus",
+      roleVirusDesc: "Knows the word, asks questions and helps in its discovery without getting caught.",
+      roleParasite: "Parasite (optional)",
+      roleParasiteDesc: "Receives a word close to the secret word. If someone proposes their word, they win the mission. There will be no vote. To score points, they can also try to make the mission fail.",
+      flowTitle: "Mission Flow",
+      step1Label: "1. Timer &amp; Wager",
+      step1Detail: "The Officer chooses the duration: 2 min 30 / 3 min 30 / 5 min 30. The shorter the timer, the higher the wager.",
+      step2Label: "2. Questioning",
+      step2Detail: "Starting from the Officer and going clockwise, players take turns asking questions or making proposals. Answers are strictly YES / NO.",
+      step3Label: "3. Instant End",
+      step3Detail: "As soon as the secret word OR the Parasite's word is proposed, the mission ends.",
+      step4Label: "4. Vote",
+      step4Detail: "If the Officer's word was found, players debate and vote on who the Virus is.",
+      scoringTitle: "Scoring System",
+      wagerHeader: "Wager / Timer",
+      wagerLow: "Low Wager",
+      wagerLowPts: "2 PTS",
+      wagerMedium: "Medium Wager",
+      wagerMediumPts: "4 PTS",
+      wagerHigh: "High Wager",
+      wagerHighPts: "6 PTS",
+      victoryLabel: "Victory",
+      defeatLabel: "Defeat",
+      trapLabel: "Trap",
+      officerVictory: "Wager value\n+1 pt if the Virus is caught",
+      officerDefeat: "-2 pts",
+      officerTrap: "0 pt",
+      crewVictory: "1 pt\n+1 pt if the Virus is caught",
+      crewDefeat: "-1 pt",
+      crewTrap: "0 pt",
+      virusVictory: "Wager / 2 + 3 pts\n0 pt if the Virus is caught",
+      virusDefeat: "-1 pt",
+      virusTrap: "0 pt",
+      parasiteCardTitle: "Parasite",
+      parasiteVictory: "0 pt\n+1 pt if the Virus is caught",
+      parasiteDefeat: "+2 pts",
+      parasiteTrap: "+6 pts!",
+      notesHeader: "Notes",
+      note1: "• Players cannot have a negative score.",
+      note2: "• Points accumulate mission after mission. The first to reach the target score wins the game (and eats the delicious chocolate donut).",
+      navSupport: "Support",
+      navRules: "Rules",
+      navPrivacy: "Privacy",
+      _title: "DOOMNUT — Game Rules",
+      _htmlLang: "en",
+      _backLabel: "Back to support",
+    },
+    fr: {
+      pageTitle: "Règles du jeu",
+      briefingTitle: "Briefing",
+      briefing1: "Trouvez le Mot Secret en interrogeant l'Officier. En commençant par l'Officier et dans le sens horaire, les joueurs posent une question ou font une proposition à tour de rôle. Dès qu'un joueur propose le mot exact, la mission se termine.",
+      briefing2: "Si quelqu'un propose le mot du Parasite, il remporte la mission. Il n'y aura pas de vote.",
+      briefing3: "Les joueurs votent pour désigner le Virus, si le mot a été trouvé.",
+      briefing4: "Le rôle du Parasite peut être activé ou désactivé.",
+      rolesTitle: "Rôles",
+      roleOfficer: "Officier",
+      roleOfficerDesc: "Connaît le mot et choisit la mise. Ne répond aux questions que par OUI/NON.",
+      roleCrew: "Équipage",
+      roleCrewDesc: "Cherche le mot en posant des questions ou en faisant des propositions.",
+      roleVirus: "Virus",
+      roleVirusDesc: "Connaît le mot, pose des questions et aide à sa découverte sans se faire démasquer.",
+      roleParasite: "Parasite (optionnel)",
+      roleParasiteDesc: "Reçoit un mot proche du mot secret. Si quelqu'un propose son mot, il remporte la mission. Il n'y aura pas de vote. Pour marquer des points, il peut aussi tenter de faire échouer la mission.",
+      flowTitle: "Déroulement de la mission",
+      step1Label: "1. Timer &amp; Mise",
+      step1Detail: "L'Officier choisit la durée : 2 min 30 / 3 min 30 / 5 min 30. Plus le timer est court, plus la mise est haute.",
+      step2Label: "2. Interrogatoire",
+      step2Detail: "En commençant par l'Officier et dans le sens horaire, les joueurs posent une question ou font une proposition à tour de rôle. Les réponses sont strictement OUI / NON.",
+      step3Label: "3. Fin instantanée",
+      step3Detail: "Dès que le mot secret OU le mot du Parasite est proposé, la mission se termine.",
+      step4Label: "4. Vote",
+      step4Detail: "Si le mot de l'Officier a été trouvé, les joueurs débattent et votent pour identifier le Virus.",
+      scoringTitle: "Système de points",
+      wagerHeader: "Mise / Timer",
+      wagerLow: "Mise basse",
+      wagerLowPts: "2 PTS",
+      wagerMedium: "Mise moyenne",
+      wagerMediumPts: "4 PTS",
+      wagerHigh: "Mise haute",
+      wagerHighPts: "6 PTS",
+      victoryLabel: "Victoire",
+      defeatLabel: "Défaite",
+      trapLabel: "Piège",
+      officerVictory: "Valeur de la mise\n+1 pt si le Virus est démasqué",
+      officerDefeat: "-2 pts",
+      officerTrap: "0 pt",
+      crewVictory: "1 pt\n+1 pt si le Virus est démasqué",
+      crewDefeat: "-1 pt",
+      crewTrap: "0 pt",
+      virusVictory: "Mise / 2 + 3 pts\n0 pt si le Virus est démasqué",
+      virusDefeat: "-1 pt",
+      virusTrap: "0 pt",
+      parasiteCardTitle: "Parasite",
+      parasiteVictory: "0 pt\n+1 pt si le Virus est démasqué",
+      parasiteDefeat: "+2 pts",
+      parasiteTrap: "+6 pts !",
+      notesHeader: "Notes",
+      note1: "• Les joueurs ne peuvent pas avoir un score négatif.",
+      note2: "• Les points s'accumulent mission après mission. Le premier à atteindre le score cible gagne la partie (et mange le délicieux donut au chocolat).",
+      navSupport: "Support",
+      navRules: "Règles",
+      navPrivacy: "Confidentialité",
+      _title: "DOOMNUT — Règles du jeu",
+      _htmlLang: "fr",
+      _backLabel: "Retour au support",
+    },
+  };
+
+  function applyLang(lang){
+    const dict = I18N[lang] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (dict[k] !== undefined) el.textContent = dict[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const k = el.getAttribute('data-i18n-html');
+      if (dict[k] !== undefined) el.innerHTML = dict[k];
+    });
+    if (dict._title) document.title = dict._title;
+    if (dict._htmlLang) document.documentElement.setAttribute('lang', dict._htmlLang);
+    const back = document.querySelector('.back-btn-icon');
+    if (back && dict._backLabel) back.setAttribute('aria-label', dict._backLabel);
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+    try { localStorage.setItem('doomnut.lang', lang); } catch(e) {}
+  }
+
+  function detectLang(){
+    try {
+      const saved = localStorage.getItem('doomnut.lang');
+      if (saved && I18N[saved]) return saved;
+    } catch(e) {}
+    const nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    return nav.startsWith('fr') ? 'fr' : 'en';
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+
+  applyLang(detectLang());
+</script>
 
 </body>
 </html>
