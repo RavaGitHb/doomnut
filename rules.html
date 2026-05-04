@@ -937,6 +937,26 @@
   });
 
   applyLang(detectLang());
+
+  /* Lang switch sticky-top fallback — bulletproof across all browsers. */
+  (function() {
+    const ls = document.querySelector('.lang-switch');
+    if (!ls) return;
+    ls.style.position = 'absolute';
+    let raf = 0;
+    function sync() {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY || window.pageYOffset || 0;
+        const offset = window.matchMedia('(max-width: 540px)').matches ? 6 : 18;
+        ls.style.top = (y + offset) + 'px';
+        raf = 0;
+      });
+    }
+    sync();
+    window.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+  })();
 </script>
 
 </body>
