@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050508">
 <title>DOOMNUT — Mission Support</title>
-<meta name="description" content="DOOMNUT — A social deduction party game for 4 to 8 players on a single device. Find the secret word, unmask the Virus, beat the Parasite. Free on Google Play.">
+<meta name="description" content="DOOMNUT — A social deduction party game for 4 to 8 players on a single device. Find the secret word, unmask the Virus, beat the Parasite. Free on Google Play and the App Store.">
 <link rel="canonical" href="https://ravagithb.github.io/doomnut/support.html">
 <link rel="icon" type="image/png" href="support_assets/favicon.png">
 <link rel="apple-touch-icon" href="support_assets/favicon.png">
@@ -36,6 +36,7 @@
     --teal:#003333;
     --purple:#7C4DFF;
     --cream:#F5F5DC;
+    --manga:#DFAD45;
     --text:rgba(255,255,255,0.85);
     --text-muted:#888888;
     --border-faint:rgba(128,222,234,0.20);
@@ -431,6 +432,137 @@
   }
   .install-section h2{margin-bottom:18px}
 
+  /* ===== NEW CONTENT BLOCK (manga theme) — mirrors index.html ===== */
+  .news-section{margin:26px 0 40px}
+  /* No frame here — only the description card below carries a border. */
+  .news-card{
+    display:flex;flex-direction:column;align-items:stretch;
+    max-width:720px;
+    margin:0 auto;
+    text-decoration:none;
+  }
+  .news-head{display:flex;align-items:center;gap:18px;margin-bottom:14px}
+  .news-icon{
+    width:70px;
+    height:auto;
+    flex-shrink:0;
+    filter:drop-shadow(0 0 10px rgba(223,173,69,0.55));
+  }
+  .news-body{flex:1;min-width:0}
+  .news-bars{display:flex;flex-direction:column;gap:8px}
+  .news-bar{
+    padding:9px 14px;
+    background:rgba(0,0,0,0.40);
+    border:2px solid rgba(223,173,69,0.38);
+    border-radius:8px;
+  }
+  .news-bar-label{
+    font-weight:600;
+    font-size:0.72rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--manga);
+    margin-bottom:6px;
+  }
+  .news-bar-track{
+    height:6px;
+    border-radius:3px;
+    background:rgba(255,255,255,0.08);
+    overflow:hidden;
+  }
+  .news-bar-fill{
+    height:100%;width:100%;
+    background:var(--manga);
+    box-shadow:0 0 4px rgba(223,173,69,0.60);
+  }
+  /* Only framed element of the block. Border weight and glow are copied from
+     .install-card so it reads as a sibling of the store cards, in yellow. */
+  .news-desc-card{
+    position:relative;
+    display:flex;align-items:center;gap:14px;
+    max-width:720px;
+    margin:14px auto 0;
+    padding:18px 22px;
+    background:linear-gradient(180deg, rgba(60,44,8,0.45) 0%, rgba(12,9,3,0.90) 100%);
+    border:2px solid var(--manga);
+    border-radius:10px;
+    /* No outer glow: it lit up the background between this box and the bars.
+       The glow lives inside the box (::after) instead. */
+    box-shadow:inset 0 1px 0 rgba(223,173,69,0.55);
+    text-decoration:none;
+    transition:all 0.3s;
+    overflow:hidden;
+  }
+  .news-desc-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:50%;
+    width:65%;height:2px;
+    transform:translateX(-50%);
+    background:linear-gradient(90deg, transparent 0%, var(--manga) 50%, transparent 100%);
+    box-shadow:0 0 12px var(--manga);
+  }
+  /* Glow inside the box itself, brighter than the store cards' inner halo */
+  .news-desc-card::after{
+    content:'';
+    position:absolute;
+    top:50%;left:50%;
+    width:95%;height:140%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(ellipse at center, rgba(223,173,69,0.19) 0%, rgba(223,173,69,0.08) 40%, transparent 70%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .news-desc-card > *{position:relative;z-index:1}
+  .news-desc-card:hover{
+    background:linear-gradient(180deg, rgba(96,70,12,0.65) 0%, rgba(24,18,6,0.94) 100%);
+    box-shadow:inset 0 1px 0 rgba(223,173,69,0.90);
+    transform:translateY(-4px);
+  }
+  .news-desc-card:hover .news-arrow{transform:translateX(4px)}
+  /* Sits at the right end of the header row, 20% larger than the title's caps */
+  .news-tag{
+    flex-shrink:0;
+    padding:3px 11px;
+    background:var(--manga);
+    border-radius:4px;
+    color:#140F03;
+    font-weight:700;
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    box-shadow:0 0 14px rgba(223,173,69,0.95), 0 0 38px rgba(223,173,69,0.70), 0 0 80px rgba(223,173,69,0.42);
+  }
+  .news-title{
+    flex:1;
+    min-width:0;
+    color:var(--manga);
+    font-weight:700;
+    font-size:1.0rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    text-align:left;
+    text-shadow:0 0 14px rgba(223,173,69,0.85), 0 0 4px rgba(223,173,69,0.55);
+  }
+  /* Same type as the "About the Mission" paragraphs above */
+  .news-desc{
+    color:var(--text);
+    font-size:1rem;
+    font-weight:400;
+    line-height:1.5;
+    text-align:left;
+  }
+  .news-arrow{
+    flex-shrink:0;
+    color:var(--manga);
+    font-size:1.6rem;
+    font-weight:700;
+    line-height:1;
+    text-shadow:0 0 8px rgba(223,173,69,0.65);
+    transition:transform 0.25s;
+  }
+  .news-card:hover .news-arrow{transform:translateX(4px)}
+
   /* ===== RULES CTA ===== */
   .rules-cta-wrap{text-align:center;margin-top:-18px;margin-bottom:54px}
   .rules-cta{
@@ -811,6 +943,17 @@
     .install-card{padding:18px 14px;gap:10px}
     .install-badge{width:160px}
     .install-status{font-size:0.62rem;letter-spacing:0.18em}
+    .news-section{margin:18px 0 28px}
+    .news-card{padding:13px 14px;max-width:320px}
+    .news-head{gap:12px;margin-bottom:12px}
+    .news-icon{width:50px}
+    .news-tag{font-size:0.54rem;letter-spacing:0.18em;padding:2px 7px}
+    .news-title{font-size:0.86rem;letter-spacing:0.12em}
+    .news-bar{padding:8px 12px}
+    .news-bar-label{font-size:0.66rem}
+    .news-desc-card{max-width:320px;padding:13px 14px;gap:10px}
+    .news-desc{font-size:0.88rem}
+    .news-arrow{font-size:1.3rem}
     .rules-cta{padding:12px 22px;font-size:0.82rem;letter-spacing:0.16em}
     .role{padding:12px 14px}
     .role-icon{width:42px;height:42px;margin-right:12px}
@@ -901,13 +1044,40 @@
              alt="Get it on Google Play">
         <div class="install-status" data-i18n="availableNow">AVAILABLE NOW</div>
       </a>
-      <div class="install-card disabled" aria-disabled="true">
+      <a class="install-card"
+         href="https://apps.apple.com/app/doomnut/id6764849470"
+         target="_blank" rel="noopener"
+         aria-label="Download DOOMNUT on the App Store">
         <img class="install-badge"
              src="support_assets/app_store_badge.svg"
              alt="Download on the App Store">
-        <div class="install-status" data-i18n="comingSoon">COMING SOON</div>
-      </div>
+        <div class="install-status" data-i18n="availableNow">AVAILABLE NOW</div>
+      </a>
     </div>
+  </section>
+
+  <section class="news-section">
+    <a class="news-card" href="rules.html#manga">
+      <div class="news-head">
+        <img class="news-icon" src="support_assets/iconmanga.png" alt="">
+        <div class="news-title" data-i18n="newsTitle">Manga Theme</div>
+        <div class="news-tag" data-i18n="newsTag">New</div>
+      </div>
+      <div class="news-bars">
+        <div class="news-bar">
+          <div class="news-bar-label" data-i18n="mangaPairs">100 word pairs</div>
+          <div class="news-bar-track"><div class="news-bar-fill"></div></div>
+        </div>
+        <div class="news-bar">
+          <div class="news-bar-label" data-i18n="mangaWords">200 words</div>
+          <div class="news-bar-track"><div class="news-bar-fill"></div></div>
+        </div>
+      </div>
+    </a>
+    <a class="news-desc-card" href="rules.html#manga">
+      <div class="news-desc" data-i18n="mangaBody1">In the manga theme, secret words are anime/manga characters, techniques and places.</div>
+      <div class="news-arrow" aria-hidden="true">›</div>
+    </a>
   </section>
 
   <section>
@@ -1043,6 +1213,11 @@
       getTitle: "Play DOOMNUT now",
       availableNow: "Available now",
       comingSoon: "Coming soon",
+      newsTag: "New",
+      newsTitle: "Manga Theme",
+      mangaPairs: "100 word pairs",
+      mangaWords: "200 words",
+      mangaBody1: "In the manga theme, secret words are anime/manga characters, techniques and places.",
       rulesCta: "Read the Game Rules",
       previewTitle: "Game Preview",
       crewTitle: "The Crew",
@@ -1086,6 +1261,11 @@
       getTitle: "Jouez à DOOMNUT maintenant",
       availableNow: "Disponible maintenant",
       comingSoon: "Bientôt disponible",
+      newsTag: "Nouveau",
+      newsTitle: "Thème Manga",
+      mangaPairs: "100 paires de mots",
+      mangaWords: "200 mots",
+      mangaBody1: "Dans le thème manga, les mots secrets sont des personnages, techniques et lieux d'animés/mangas.",
       rulesCta: "Lire les règles du jeu",
       previewTitle: "Aperçu du jeu",
       crewTitle: "L'Équipage",

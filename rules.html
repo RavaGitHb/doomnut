@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050508">
 <title>DOOMNUT — Game Rules</title>
-<meta name="description" content="DOOMNUT game rules — roles, mission flow, scoring system. Find the secret word, unmask the Virus, beat the Parasite.">
+<meta name="description" content="DOOMNUT game rules — roles, mission flow, scoring system, Manga theme. Find the secret word, unmask the Virus, beat the Parasite.">
 <link rel="canonical" href="https://ravagithb.github.io/doomnut/rules.html">
 <link rel="icon" type="image/png" href="support_assets/favicon.png">
 <link rel="apple-touch-icon" href="support_assets/favicon.png">
@@ -36,6 +36,7 @@
     --teal:#003333;
     --purple:#7C4DFF;
     --cream:#F5F5DC;
+    --manga:#DFAD45;
     --wager-low:#1AB800;
     --wager-medium:#008BFF;
     --wager-high:#BB00FF;
@@ -229,6 +230,8 @@
     padding:18px 20px;
     box-shadow:0 0 24px rgba(128,222,234,0.08);
   }
+  /* Scoring is split into separate boxes, like the in-game rules screen */
+  .card + .card{margin-top:16px}
   .card .body-line{
     margin:6px 0;
     color:rgba(255,255,255,0.92);
@@ -242,6 +245,26 @@
     text-transform:uppercase;
     font-size:0.85rem;
     margin:4px 0 10px;
+  }
+
+  /* ===== MANGA THEME =====
+     Mirrors the shop's manga box (shop_screen.dart _buildModeSection):
+     icon + glowing yellow title, then content bars, then the pack card. */
+  .section-manga .section-title::before{display:none}
+  .section-manga .section-title h2{
+    color:var(--manga);
+    text-shadow:0 0 10px rgba(223,173,69,0.5);
+  }
+  /* Pre-tinted PNG as a plain <img> — see index.html for why, not a mask. */
+  .manga-icon{
+    width:46px;
+    height:auto;
+    flex-shrink:0;
+    filter:drop-shadow(0 0 8px rgba(223,173,69,0.50));
+  }
+  .card-manga{
+    border-color:rgba(223,173,69,0.50);
+    box-shadow:0 0 24px rgba(223,173,69,0.08);
   }
 
   /* ===== ROLES ===== */
@@ -512,6 +535,7 @@
     .card{padding:14px 14px}
     .card .body-line{font-size:0.86rem}
     .card .sub-title{font-size:0.78rem}
+    .manga-icon{width:38px}
     .role-row{gap:10px;padding:6px 0}
     .role-badge{width:40px;height:40px}
     .role-name{font-size:0.82rem;letter-spacing:0.14em}
@@ -592,6 +616,18 @@
       <p class="body-line" data-i18n="briefing2">If someone proposes the Parasite's word, they win the mission. There will be no vote.</p>
       <p class="body-line" data-i18n="briefing3">Players vote to designate the Virus, if the word was found.</p>
       <p class="body-line" data-i18n="briefing4">The Parasite role can be toggled on or off.</p>
+    </div>
+  </div>
+
+  <!-- MANGA THEME -->
+  <div class="section section-manga" id="manga">
+    <div class="section-title">
+      <img class="manga-icon" src="support_assets/iconmanga.png" alt="">
+      <h2 data-i18n="mangaTitle">Manga Theme</h2>
+    </div>
+    <div class="card card-manga">
+      <p class="body-line" data-i18n="mangaBody1">In the manga theme, secret words are anime/manga characters, techniques and places.</p>
+      <p class="body-line" data-i18n="mangaBody2">In missions with a Parasite, you cannot ask which series a character is from (e.g. "is it from One Piece?"), directly or indirectly.</p>
     </div>
   </div>
 
@@ -693,7 +729,10 @@
           <div class="wager-time">2 MIN 30</div>
         </div>
       </div>
+    </div>
 
+    <div class="card">
+      <div class="sub-title" data-i18n="breakdownHeader">Points breakdown</div>
       <div class="points-grid">
         <div class="points-card role-officer">
           <div class="points-card-content">
@@ -771,7 +810,9 @@
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="card">
       <div class="sub-title" data-i18n="notesHeader">Notes</div>
       <p class="body-line" data-i18n="note1">• Players cannot have a negative score.</p>
       <p class="body-line" data-i18n="note2">• Points accumulate mission after mission. The first to reach the target score wins the game (and eats the delicious chocolate donut).</p>
@@ -800,6 +841,9 @@
       briefing2: "If someone proposes the Parasite's word, they win the mission. There will be no vote.",
       briefing3: "Players vote to designate the Virus, if the word was found.",
       briefing4: "The Parasite role can be toggled on or off.",
+      mangaTitle: "Manga Theme",
+      mangaBody1: "In the manga theme, secret words are anime/manga characters, techniques and places.",
+      mangaBody2: "In missions with a Parasite, you cannot ask which series a character is from (e.g. \"is it from One Piece?\"), directly or indirectly.",
       rolesTitle: "Roles",
       roleOfficer: "Officer",
       roleOfficerDesc: "Knows the word and picks the wager. Only answers questions with YES/NO.",
@@ -820,6 +864,7 @@
       step4Detail: "If the Officer's word was found, players debate and vote on who the Virus is.",
       scoringTitle: "Scoring System",
       wagerHeader: "Wager / Timer",
+      breakdownHeader: "Points breakdown",
       wagerLow: "Low Wager",
       wagerLowPts: "2 PTS",
       wagerMedium: "Medium Wager",
@@ -859,6 +904,9 @@
       briefing2: "Si quelqu'un propose le mot du Parasite, il remporte la mission. Il n'y aura pas de vote.",
       briefing3: "Les joueurs votent pour désigner le Virus, si le mot a été trouvé.",
       briefing4: "Le rôle du Parasite peut être activé ou désactivé.",
+      mangaTitle: "Thème Manga",
+      mangaBody1: "Dans le thème manga, les mots secrets sont des personnages, techniques et lieux d'animés/mangas.",
+      mangaBody2: "Dans les missions avec un Parasite, interdit de demander de quelle série vient un personnage (ex : « c'est dans One Piece ? »), directement ou indirectement.",
       rolesTitle: "Rôles",
       roleOfficer: "Officier",
       roleOfficerDesc: "Connaît le mot et choisit la mise. Ne répond aux questions que par OUI/NON.",
@@ -879,6 +927,7 @@
       step4Detail: "Si le mot de l'Officier a été trouvé, les joueurs débattent et votent pour identifier le Virus.",
       scoringTitle: "Système de points",
       wagerHeader: "Mise / Timer",
+      breakdownHeader: "Calcul des points",
       wagerLow: "Mise basse",
       wagerLowPts: "2 PTS",
       wagerMedium: "Mise moyenne",
